@@ -69,6 +69,9 @@ void Basic::runTexture() {
     }
     stbi_image_free(data);
     
+    shader.use();
+    shader.setUniform1i("texture0", 0);
+    
     System &system = System::instance();
     while (system.getWindowState()) {
         if (system.getKeyState(key_esc)) system.closeWindow();
