@@ -58,6 +58,12 @@ bool System::getWindowState() {
     return !glfwWindowShouldClose(window);
 }
 
+Size<int> System::getWindowSize() {
+    int width, height;
+    glfwGetWindowSize(window, &width, &height);
+    return {width, height};
+}
+
 void System::swapBuffer() {
     glfwSwapBuffers(window);
 }

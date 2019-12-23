@@ -22,6 +22,10 @@ enum key {
     key_d = GLFW_KEY_D
 };
 
+template<typename T> struct Size {
+    T width, height;
+};
+
 class System {
     
 public:
@@ -40,6 +44,8 @@ public:
     void pollEvents();
     
     bool getWindowState();
+    Size<int> getWindowSize();
+    
     bool getKeyState(int key);
     
     float getTime();
