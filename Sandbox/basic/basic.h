@@ -9,6 +9,7 @@ public:
     Basic() { }
     
     void runTriangle();
+    void runTexture();
     
 private:
     

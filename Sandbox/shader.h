@@ -41,7 +41,7 @@ public:
         glDeleteShader(shader);
     }
     
-    void bindFragDataLocation(GLuint colorNumber, const char * name) {
+    void bindFragDataLocation(GLuint colorNumber, const char* name) {
         glBindFragDataLocation(ID, colorNumber, name);
     }
     
