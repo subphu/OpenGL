@@ -20,7 +20,7 @@ int main() {
     system.settingInput();
     
     Basic basic = Basic();
-    basic.runPerspective();
+    basic.runTestCamera();
     
     system.closeWindow();
     

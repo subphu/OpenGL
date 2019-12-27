@@ -62,6 +62,7 @@ void Basic::runTexture() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     
     int width, height, colorChannels;
+    stbi_set_flip_vertically_on_load(true);
     unsigned char *data = stbi_load("resources/container.jpg", &width, &height, &colorChannels, 0);
     if (data) {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);

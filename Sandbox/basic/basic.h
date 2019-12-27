@@ -11,6 +11,7 @@ public:
     void runTriangle();
     void runTexture();
     void runPerspective();
+    void runTestCamera();
     
 private:
     
