@@ -5,6 +5,7 @@
 
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <glm/glm.hpp>
 
 #define KEY_RELEASE GLFW_RELEASE    // 0
 #define KEY_PRESS GLFW_PRESS        // 1
@@ -19,7 +20,9 @@ enum key {
     key_w = GLFW_KEY_W,
     key_a = GLFW_KEY_A,
     key_s = GLFW_KEY_S,
-    key_d = GLFW_KEY_D
+    key_d = GLFW_KEY_D,
+    key_q = GLFW_KEY_Q,
+    key_e = GLFW_KEY_E
 };
 
 template<typename T> struct Size {
@@ -29,9 +32,12 @@ template<typename T> struct Size {
 class System {
     
 public:
+    glm::vec2 cursorPos;
     
     void initGlLibrary();
     void settingInput();
+    void enableCursor();
+    void disableCursor();
     
     void settingWindow();
     void createWindow(GLuint width, GLuint height, const char* name);
@@ -46,6 +52,10 @@ public:
     Size<int> getWindowSize();
     
     bool getKeyState(int key);
+    glm::vec2 getCursorPosition();
+    glm::vec2 getCursorMovement();
+    
+    void setScrollCallback(void (*callback)(float, float));
     
     float getTime();
 
@@ -56,6 +66,9 @@ public:
     
 private:
     GLFWwindow* window;
+    void (*scrollCallback)(float, float);
+    
+    static void glfwScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
     
     System();
     ~System();
