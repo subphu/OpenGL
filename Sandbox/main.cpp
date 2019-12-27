@@ -17,7 +17,6 @@ int main() {
     system.createWindow(WIDTH, HEIGHT, NAME.c_str());
     
     system.initGlLibrary();
-    system.settingOpenGL();
     system.settingInput();
     
     Basic basic = Basic();

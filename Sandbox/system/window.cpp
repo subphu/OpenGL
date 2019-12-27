@@ -17,11 +17,6 @@ void System::initGlLibrary() {
     if (glewInit() != GLEW_OK) exitFailure(GLEW_FAILED_MESSAGE);
 }
 
-void System::settingOpenGL() {
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
-
 void System::settingWindow() {
     glfwInit();
     

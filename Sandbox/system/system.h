@@ -31,7 +31,6 @@ class System {
 public:
     
     void initGlLibrary();
-    void settingOpenGL();
     void settingInput();
     
     void settingWindow();

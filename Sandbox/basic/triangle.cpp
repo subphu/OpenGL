@@ -9,6 +9,8 @@
 #include "../system/system.h"
 
 void Basic::runTriangle() {
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     Shader shader = Shader();
     shader.addShaderFrom("shader/shader.vert", GL_VERTEX_SHADER);
