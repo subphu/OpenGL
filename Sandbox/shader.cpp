@@ -70,6 +70,14 @@ void Shader::setUniform4f(const std::string &name, float v0,float v1, float v2, 
     glUniform4f(glGetUniformLocation(ID, name.c_str()), v0, v1, v2, v3);
 }
 
+void Shader::setUniform3f(const std::string &name, glm::vec3 vec) const {
+    glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, &vec[0]);
+}
+
+void Shader::setUniform4f(const std::string &name, glm::vec4 vec) const{
+    glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1, &vec[0]);
+}
+
 void Shader::setUniformMatrix3fv(const std::string &name, const glm::mat3 &mat) const {
     glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
