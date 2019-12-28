@@ -20,6 +20,7 @@ public:
     void turn(glm::vec2 delta);
     void zoom(float delta);
     
+    glm::vec3 getPosition();
     glm::mat4 getViewMatrix();
     glm::mat4 getProjection(float ratio);
     
@@ -37,6 +38,7 @@ private:
     float speed;
     float sensitivity;
     float viewDistance;
+    float viewAngle;
     
     float maxZoom;
     float maxPitch;

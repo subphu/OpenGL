@@ -16,7 +16,8 @@
 #define MAX_PITCH 89.0f
 #define SPEED     0.10f
 #define SENSITIVITY   0.1f
-#define VIEW_DISTANCE 45.0f
+#define VIEW_DISTANCE 100.0f
+#define VIEW_ANGLE    45.0f
 
 #define YAW   0.0f
 #define PITCH 0.0f
@@ -42,10 +43,15 @@ void Camera::reset() {
     speed = SPEED;
     sensitivity = SENSITIVITY;
     viewDistance = VIEW_DISTANCE;
+    viewAngle = VIEW_ANGLE;
     
     yaw = YAW;
     pitch = PITCH;
     roll = ROLL;
+}
+
+glm::vec3 Camera::getPosition() {
+    return position;
 }
 
 glm::mat4 Camera::getViewMatrix() {
@@ -53,7 +59,7 @@ glm::mat4 Camera::getViewMatrix() {
 }
 
 glm::mat4 Camera::getProjection(float ratio) {
-    return glm::perspective(glm::radians(viewDistance), ratio, 0.1f, 100.0f);
+    return glm::perspective(glm::radians(viewAngle), ratio, 0.1f, viewDistance);
 }
 
 void Camera::setInvertedAxis(bool value) {
@@ -77,8 +83,8 @@ void Camera::lookAt(glm::vec3 focusPos) {
 }
 
 void Camera::zoom(float delta) {
-    viewDistance += delta;
-    viewDistance = fmax(fmin(viewDistance, maxZoom), 1.0f);
+    viewAngle += delta;
+    viewAngle = fmax(fmin(viewAngle, maxZoom), 1.0f);
 }
 
 void Camera::move(glm::vec3 direction) {
