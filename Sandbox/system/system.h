@@ -4,7 +4,6 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
-#include <iostream>
 #include <glm/glm.hpp>
 
 #define KEY_RELEASE GLFW_RELEASE    // 0

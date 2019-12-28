@@ -5,6 +5,7 @@
 #include <cmath>
 
 #include "basic.h"
+#include "../define.h"
 #include "../shader.h"
 #include "../system/system.h"
 

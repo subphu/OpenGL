@@ -1,14 +1,15 @@
 //  Copyright © 2019 Subph. All rights reserved.
 //
 
-#include <iostream>
-#include <cmath>
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <iostream>
+#include <cmath>
+
 #include "basic.h"
+#include "../define.h"
 #include "../shader.h"
 #include "../camera.h"
 #include "../system/system.h"

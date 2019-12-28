@@ -1,9 +1,11 @@
 //  Copyright © 2019 Subph. All rights reserved.
 //
 
+#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
 #include "camera.h"
+#include "define.h"
 #include "system/system.h"
 
 #define FRONT    glm::vec3(0.0f, 0.0f, 0.0f)
@@ -12,8 +14,8 @@
 
 #define MAX_ZOOM  45.0f
 #define MAX_PITCH 89.0f
-#define SPEED    0.10f
-#define SENSITIVITY 0.1f
+#define SPEED     0.10f
+#define SENSITIVITY   0.1f
 #define VIEW_DISTANCE 45.0f
 
 #define YAW   0.0f
