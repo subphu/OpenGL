@@ -32,7 +32,7 @@ void Basic::runTestCamera() {
     shader.bindFragDataLocation(0, "fragColor");
     shader.compile();
     
-    float vertices[] = CUBE_VERTICES;
+    float vertices[] = CUBE_TEXTURE;
 
     glm::vec3 cubePositions[] = {
         glm::vec3( 0.0f,  0.0f,  0.0f),
@@ -82,11 +82,10 @@ void Basic::runTestCamera() {
     
     shader.use();
     shader.setUniform1i("texture0", 0);
-
-    float lastTime = system.getTime();
-    float lag = 0;
-    float frameDelay = 0.016667;
     
+    float lag = 0;
+    float lastTime = system.getTime();
+    float frameDelay = 1.f/60.f;
 
     system.disableCursor();
     system.setScrollCallback(&scroll);

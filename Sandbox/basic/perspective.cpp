@@ -28,7 +28,7 @@ void Basic::runPerspective() {
     shader.bindFragDataLocation(0, "fragColor");
     shader.compile();
     
-    float vertices[] = CUBE_VERTICES;
+    float vertices[] = CUBE_TEXTURE;
 
     glm::vec3 cubePositions[] = {
         glm::vec3( 0.0f,  0.0f,  0.0f),
