@@ -12,6 +12,7 @@ public:
     void runTexture();
     void runPerspective();
     void runTestCamera();
+    void runLighting();
     
 private:
     

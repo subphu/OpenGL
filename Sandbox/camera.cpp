@@ -14,7 +14,7 @@
 
 #define MAX_ZOOM  45.0f
 #define MAX_PITCH 89.0f
-#define SPEED     0.10f
+#define SPEED     0.030f
 #define SENSITIVITY   0.1f
 #define VIEW_DISTANCE 100.0f
 #define VIEW_ANGLE    45.0f

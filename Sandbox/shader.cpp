@@ -24,8 +24,8 @@ Shader::~Shader() {
 }
 
 void Shader::addShaderFrom(const char* path, unsigned int type) {
-    const char* code = readShaderCode(path).c_str();
-    addShader(code, type);
+    std::string str = readShaderCode(path);
+    addShader(str.c_str(), type);
 }
 
 void Shader::addShader(const char* code, unsigned int type) {
