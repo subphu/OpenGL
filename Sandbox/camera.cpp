@@ -14,7 +14,7 @@
 
 #define MAX_ZOOM  45.0f
 #define MAX_PITCH 89.0f
-#define SPEED     0.030f
+#define SPEED     0.10f
 #define SENSITIVITY   0.1f
 #define VIEW_DISTANCE 100.0f
 #define VIEW_ANGLE    45.0f
@@ -84,7 +84,7 @@ void Camera::lookAt(glm::vec3 focusPos) {
 
 void Camera::zoom(float delta) {
     viewAngle += delta;
-    viewAngle = fmax(fmin(viewAngle, maxZoom), 1.0f);
+    viewAngle = glm::clamp(viewAngle, 1.0f, maxZoom);
 }
 
 void Camera::move(glm::vec3 direction) {
@@ -101,7 +101,7 @@ void Camera::turn(glm::vec2 delta) {
     
     yaw   += axis * delta.x * sensitivity;
     pitch += axis * delta.y * sensitivity;
-    pitch = useConstraint ? fmax(fmin(pitch, maxPitch), -maxPitch) : pitch;
+    pitch = useConstraint ? glm::clamp(pitch, -maxPitch, maxPitch) : pitch;
     updateVector();
 }
 
