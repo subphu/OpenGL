@@ -23,8 +23,8 @@ void Basic::runPerspective() {
     Size<int> size = system.getWindowSize();
     
     Shader shader = Shader();
-    shader.addShaderFrom("shader/perspective.vert", GL_VERTEX_SHADER);
-    shader.addShaderFrom("shader/perspective.frag", GL_FRAGMENT_SHADER);
+    shader.addShaderFrom("shader/basic/perspective.vert", GL_VERTEX_SHADER);
+    shader.addShaderFrom("shader/basic/perspective.frag", GL_FRAGMENT_SHADER);
     shader.bindFragDataLocation(0, "fragColor");
     shader.compile();
     

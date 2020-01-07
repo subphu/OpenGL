@@ -24,14 +24,14 @@ void Basic::runLighting() {
     float ratio = (float)size.width / (float)size.height;
     
     Shader shader = Shader();
-    shader.addShaderFrom("shader/phong.vert", GL_VERTEX_SHADER);
-    shader.addShaderFrom("shader/phong.frag", GL_FRAGMENT_SHADER);
+    shader.addShaderFrom("shader/basic/phong.vert", GL_VERTEX_SHADER);
+    shader.addShaderFrom("shader/basic/phong.frag", GL_FRAGMENT_SHADER);
     shader.bindFragDataLocation(0, "fragColor");
     shader.compile();
     
     Shader lightShader = Shader();
-    lightShader.addShaderFrom("shader/light.vert", GL_VERTEX_SHADER);
-    lightShader.addShaderFrom("shader/light.frag", GL_FRAGMENT_SHADER);
+    lightShader.addShaderFrom("shader/basic/light.vert", GL_VERTEX_SHADER);
+    lightShader.addShaderFrom("shader/basic/light.frag", GL_FRAGMENT_SHADER);
     lightShader.bindFragDataLocation(0, "fragColor");
     lightShader.compile();
     

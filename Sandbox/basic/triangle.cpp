@@ -14,8 +14,8 @@ void Basic::runTriangle() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     Shader shader = Shader();
-    shader.addShaderFrom("shader/shader.vert", GL_VERTEX_SHADER);
-    shader.addShaderFrom("shader/shader.frag", GL_FRAGMENT_SHADER);
+    shader.addShaderFrom("shader/basic/triangle.vert", GL_VERTEX_SHADER);
+    shader.addShaderFrom("shader/basic/triangle.frag", GL_FRAGMENT_SHADER);
     shader.bindFragDataLocation(0, "fragColor");
     shader.compile();
     

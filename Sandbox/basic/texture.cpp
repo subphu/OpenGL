@@ -14,8 +14,8 @@ void Basic::runTexture() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     Shader shader = Shader();
-    shader.addShaderFrom("shader/texture.vert", GL_VERTEX_SHADER);
-    shader.addShaderFrom("shader/texture.frag", GL_FRAGMENT_SHADER);
+    shader.addShaderFrom("shader/basic/texture.vert", GL_VERTEX_SHADER);
+    shader.addShaderFrom("shader/basic/texture.frag", GL_FRAGMENT_SHADER);
     shader.compile();
     
     float vertices[] = {
