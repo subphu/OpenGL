@@ -87,11 +87,23 @@ void Basic::runLighting() {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
+        glm::vec3 lightColor = glm::vec3(1.f);
+        lightColor.x = fmax(0.3, sin(system.getTime() * 2.0f));
+        lightColor.y = fmax(0.3, sin(system.getTime() * 0.7f));
+        lightColor.z = fmax(0.3, sin(system.getTime() * 1.3f));
+        
         shader.use();
-        shader.setUniform3f("objectColor", 1.0f, 0.5f, 0.31f);
-        shader.setUniform3f("lightColor", 1.0f, 1.0f, 1.0f);
         shader.setUniform3f("lightPos", lightPos);
         shader.setUniform3f("viewPos", camera.getPosition());
+        
+        shader.setUniform3f("light.ambient", lightColor * glm::vec3(0.1f));
+        shader.setUniform3f("light.diffuse", lightColor * glm::vec3(0.5f));
+        shader.setUniform3f("light.specular", 1.0f, 1.0f, 1.0f);
+        
+        shader.setUniform3f("material.ambient",  1.0f, 1.0f, 1.0f);
+        shader.setUniform3f("material.diffuse",  1.0f, 1.0f, 1.0f);
+        shader.setUniform3f("material.specular", 0.5f, 0.5f, 0.5f);
+        shader.setUniform1f("material.shininess", 32.0f);
 
         shader.setUniformMatrix4fv("projection", camera.getProjection(ratio));
         shader.setUniformMatrix4fv("view", camera.getViewMatrix());
@@ -103,6 +115,7 @@ void Basic::runLighting() {
         glDrawArrays(GL_TRIANGLES, 0, 36);
         
         lightShader.use();
+        lightShader.setUniform3f("lightColor", lightColor);
         lightShader.setUniformMatrix4fv("projection", camera.getProjection(ratio));
         lightShader.setUniformMatrix4fv("view", camera.getViewMatrix());
         
