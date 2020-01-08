@@ -94,7 +94,6 @@ void Basic::runLighting() {
         
         shader.use();
         shader.setUniform3f("lightPos", lightPos);
-        shader.setUniform3f("viewPos", camera.getPosition());
         
         shader.setUniform3f("light.ambient", lightColor * glm::vec3(0.1f));
         shader.setUniform3f("light.diffuse", lightColor * glm::vec3(0.5f));
