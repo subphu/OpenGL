@@ -32,7 +32,7 @@ void Shader::addShader(const char* code, unsigned int type) {
     unsigned int shader = glCreateShader(type);
     glShaderSource(shader, 1, &code, NULL);
     glCompileShader(shader);
-    checkCompileErrors(shader, shader == GL_VERTEX_SHADER ? VERTEX : FRAGMENT);
+    checkCompileErrors(shader, type == GL_VERTEX_SHADER ? VERTEX : FRAGMENT);
     glAttachShader(ID, shader);
     glDeleteShader(shader);
 }
