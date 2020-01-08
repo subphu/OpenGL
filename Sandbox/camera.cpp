@@ -50,6 +50,10 @@ void Camera::reset() {
     roll = ROLL;
 }
 
+glm::vec3 Camera::getFront() {
+    return front;
+}
+
 glm::vec3 Camera::getPosition() {
     return position;
 }

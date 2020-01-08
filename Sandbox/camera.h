@@ -20,6 +20,7 @@ public:
     void turn(glm::vec2 delta);
     void zoom(float delta);
     
+    glm::vec3 getFront();
     glm::vec3 getPosition();
     glm::mat4 getViewMatrix();
     glm::mat4 getProjection(float ratio);
