@@ -13,6 +13,7 @@ public:
     void runPerspective();
     void runTestCamera();
     void runLighting();
+    void runMultipleLight();
     
 private:
     

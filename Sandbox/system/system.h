@@ -21,7 +21,10 @@ enum key {
     key_s = GLFW_KEY_S,
     key_d = GLFW_KEY_D,
     key_q = GLFW_KEY_Q,
-    key_e = GLFW_KEY_E
+    key_e = GLFW_KEY_E,
+    key_z = GLFW_KEY_Z,
+    key_x = GLFW_KEY_X,
+    key_c = GLFW_KEY_C
 };
 
 template<typename T> struct Size {
