@@ -1,6 +1,7 @@
 #version 410 core
 
 struct Material {
+    sampler2D textureDiffuse;
     vec3 ambient, diffuse, specular;
     float shininess;
 };
@@ -31,6 +32,7 @@ struct SpotLight {
 uniform vec3 viewPos;
 uniform int totalPointLights;
 uniform int totalSpotLights;
+uniform int useTexture;
 
 uniform DirLight dirLight;
 uniform PointLight pointLights[10];
@@ -39,6 +41,7 @@ uniform Material material;
 
 in vec3 Normal;
 in vec3 FragPos;
+in vec2 TexCoords;
 
 out vec4 fragColor;
 
@@ -101,14 +104,31 @@ float calcAttenuation(AttenConst constant, float distance) {
     return 1.0 / (1 + constant.linear * distance + constant.quadratic * (distance * distance));
 }
 
+vec3 diffuse;
+vec3 ambient;
+vec3 specular;
+float shininess;
 vec3 calcLight(Light light, vec3 direction, vec3 normal, vec3 viewDir) {
-    vec3 ambient = light.ambient * material.ambient;
+    
+    if (useTexture == 1) {
+        diffuse = texture(material.textureDiffuse, TexCoords).rgb;
+        ambient = diffuse * 0.1;
+        specular = diffuse;
+        shininess = 32;
+    } else {
+        diffuse = material.diffuse;
+        ambient = material.ambient;
+        specular = material.specular;
+        shininess = material.shininess;
+    }
+    
+    vec3 ambient = light.ambient * ambient;
     
     float cosAngle = max(dot(normal, direction), 0.0);
-    vec3 diffuse = light.diffuse * cosAngle * material.diffuse;
+    vec3 diffuse = light.diffuse * cosAngle * diffuse;
     
     vec3 reflectDir = reflect(-direction, normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
-    vec3 specular = light.specular * spec * material.specular;
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
+    vec3 specular = light.specular * spec * specular;
     return (ambient + diffuse + specular);
 }

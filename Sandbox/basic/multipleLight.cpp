@@ -179,7 +179,7 @@ void Basic::runMultipleLight() {
         for (unsigned int i = 0; i < 4; i++) {
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, pointLightPositions[i]);
-            model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube
+            model = glm::scale(model, glm::vec3(0.2f));
             lightShader.setUniformMatrix4fv("model", model);
             lightShader.setUniform3f("lightColor", pointLightColors[i]);
             glDrawArrays(GL_TRIANGLES, 0, 36);
