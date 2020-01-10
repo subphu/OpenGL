@@ -21,7 +21,7 @@ int main() {
     system.settingInput();
     
     Basic basic = Basic();
-    basic.runMultipleLight();
+    basic.runFramebuffer();
     
     system.closeWindow();
     

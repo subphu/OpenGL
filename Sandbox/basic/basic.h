@@ -14,6 +14,7 @@ public:
     void runTestCamera();
     void runLighting();
     void runMultipleLight();
+    void runFramebuffer();
     
 private:
     
