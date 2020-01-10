@@ -59,6 +59,12 @@ Size<int> System::getWindowSize() {
     return {width, height};
 }
 
+Size<int> System::getFramebufferSize() {
+    int width, height;
+    glfwGetFramebufferSize(window, &width, &height);
+    return {width, height};
+}
+
 void System::swapBuffer() {
     glfwSwapBuffers(window);
 }

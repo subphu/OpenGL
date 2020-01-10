@@ -52,6 +52,7 @@ public:
     
     bool getWindowState();
     Size<int> getWindowSize();
+    Size<int> getFramebufferSize();
     
     bool getKeyState(int key);
     glm::vec2 getCursorPosition();
