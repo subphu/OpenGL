@@ -117,8 +117,8 @@ void Basic::runFramebuffer() {
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     
-    unsigned int cubeTexture = loadTexture("resources/container.jpg");
-    unsigned int floorTexture = loadTexture("resources/brickwall.jpg");
+    unsigned int cubeTexture = loadTexture("resources/texture/container.jpg");
+    unsigned int floorTexture = loadTexture("resources/texture/brickwall.jpg");
 
     shader.use();
     shader.setUniform1i("useTexture", 1);
@@ -127,6 +127,7 @@ void Basic::runFramebuffer() {
     screenShader.use();
     screenShader.setUniform1i("texture0", 0);
 
+    
     
     unsigned int framebuffer;
     glGenFramebuffers(1, &framebuffer);
@@ -149,6 +150,8 @@ void Basic::runFramebuffer() {
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         LOG "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" ENDL;
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    
+    
     
     float lag = 0;
     float lastTime = system.getTime();
@@ -187,8 +190,10 @@ void Basic::runFramebuffer() {
             lag -= frameDelay;
         }
         
+        
         glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
         glEnable(GL_DEPTH_TEST);
+        
         
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -197,7 +202,6 @@ void Basic::runFramebuffer() {
         shader.setUniform3f("viewPos", camera.getPosition());
         shader.setUniformMatrix4fv("view", camera.getViewMatrix());
         shader.setUniformMatrix4fv("projection", camera.getProjection(ratio));
-        
         
         shader.setUniform3f("dirLight.direction", -0.2f, -1.0f, -0.3f);
         shader.setUniform3f("dirLight.light.ambient", 0.05f, 0.05f, 0.05f);
@@ -253,6 +257,7 @@ void Basic::runFramebuffer() {
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
         
+        
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glDisable(GL_DEPTH_TEST);
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -264,6 +269,7 @@ void Basic::runFramebuffer() {
         glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
+        
         system.swapBuffer();
         system.pollEvents();
         
