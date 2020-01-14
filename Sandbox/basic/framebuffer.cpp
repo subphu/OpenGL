@@ -240,7 +240,6 @@ void Basic::runFramebuffer() {
         model = glm::scale(model, glm::vec3(10.0f));
         shader.setUniformMatrix4fv("model", model);
         glDrawArrays(GL_TRIANGLES, 0, 6);
-        glBindVertexArray(0);
         
         
         lightShader.use();

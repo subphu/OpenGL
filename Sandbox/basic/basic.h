@@ -15,6 +15,7 @@ public:
     void runLighting();
     void runMultipleLight();
     void runFramebuffer();
+    void runCubemaps();
     
 private:
     

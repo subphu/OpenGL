@@ -21,7 +21,7 @@ int main() {
     system.settingInput();
     
     Basic basic = Basic();
-    basic.runFramebuffer();
+    basic.runCubemaps();
     
     system.closeWindow();
     
