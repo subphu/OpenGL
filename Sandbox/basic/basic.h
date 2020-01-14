@@ -2,26 +2,15 @@
 //
 
 #pragma once
-
-class Basic {
     
-public:
-    Basic() { }
-    
-    void runTriangle();
-    void runTexture();
-    void runPerspective();
-    void runTestCamera();
-    void runLighting();
-    void runMultipleLight();
-    void runFramebuffer();
-    void runCubemaps();
-    
-private:
-    
-};
-
-
+void runTriangle();
+void runTexture();
+void runPerspective();
+void runTestCamera();
+void runLighting();
+void runMultipleLight();
+void runFramebuffer();
+void runCubemaps();
 
 #define CUBE {                                                           \
     -0.5f, -0.5f, -0.5f,     0.5f,  0.5f, -0.5f,     0.5f, -0.5f, -0.5f, \

@@ -16,9 +16,8 @@
 #include "../libraries/stb_image.h"
 
 Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));
-void scroll(float xoffset, float yoffset);
 
-void Basic::runTestCamera() {
+void runTestCamera() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -87,8 +86,10 @@ void Basic::runTestCamera() {
     float lastTime = system.getTime();
     float frameDelay = 1.f/60.f;
 
+    auto scroll = [](float xoffset, float yoffset) { camera.zoom(yoffset); };
+
     system.disableCursor();
-    system.setScrollCallback(&scroll);
+    system.setScrollCallback(scroll);
 
     while (system.getWindowState()) {
         if (system.getKeyState(key_esc)) system.closeWindow();
@@ -136,8 +137,4 @@ void Basic::runTestCamera() {
 
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
-}
-
-void scroll(float xoffset, float yoffset) {
-    camera.zoom(yoffset);
 }

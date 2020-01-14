@@ -14,7 +14,7 @@
 #include "../camera.h"
 #include "../system/system.h"
 
-void Basic::runMultipleLight() {
+void runMultipleLight() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

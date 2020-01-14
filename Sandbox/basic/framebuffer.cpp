@@ -17,7 +17,7 @@
 
 unsigned int loadTexture(const char *path);
 
-void Basic::runFramebuffer() {
+void runFramebuffer() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glEnable(GL_CULL_FACE); 

@@ -20,8 +20,7 @@ int main() {
     system.initGlLibrary();
     system.settingInput();
     
-    Basic basic = Basic();
-    basic.runCubemaps();
+    runCubemaps();
     
     system.closeWindow();
     

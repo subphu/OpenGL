@@ -18,7 +18,7 @@
 
 unsigned int loadCubemap(std::string *faces);
 
-void Basic::runCubemaps() {
+void runCubemaps() {
     glEnable(GL_DEPTH_TEST);
     
     System &system = System::instance();

@@ -9,7 +9,7 @@
 #include "../system/system.h"
 #include "../libraries/stb_image.h"
 
-void Basic::runTexture() {
+void runTexture() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     

@@ -9,7 +9,7 @@
 #include "../shader.h"
 #include "../system/system.h"
 
-void Basic::runTriangle() {
+void runTriangle() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
