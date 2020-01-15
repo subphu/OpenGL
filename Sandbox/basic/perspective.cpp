@@ -13,6 +13,7 @@
 #include "../shader.h"
 #include "../system/system.h"
 #include "../libraries/stb_image.h"
+#include "../object/mesh.h"
 
 void runPerspective() {
     glEnable(GL_DEPTH_TEST);
@@ -28,7 +29,8 @@ void runPerspective() {
     shader.bindFragDataLocation(0, "fragColor");
     shader.compile();
     
-    float vertices[] = CUBE_TEXTURE;
+    unsigned long memorySize;
+    float * vertices = Mesh::createCube(memorySize, MESH_TEXTURE);
 
     glm::vec3 cubePositions[] = {
         glm::vec3( 0.0f,  0.0f,  0.0f),
@@ -49,7 +51,7 @@ void runPerspective() {
     
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, memorySize, vertices, GL_STATIC_DRAW);
     
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);

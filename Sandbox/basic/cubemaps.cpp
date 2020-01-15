@@ -15,6 +15,7 @@
 #include "../camera.h"
 #include "../system/system.h"
 #include "../libraries/stb_image.h"
+#include "../object/mesh.h"
 
 unsigned int loadCubemap(std::string *faces);
 
@@ -35,17 +36,16 @@ void runCubemaps() {
     skyboxShader.addShaderFrom("shader/basic/skybox.frag", GL_FRAGMENT_SHADER);
     skyboxShader.compile();
     
-    float skyboxVertices[] = CUBE;
-    float cubeVertices[] = CUBE_NORMAL;
-    
-    for (int i = 0; i < 108; i++) skyboxVertices[i] = skyboxVertices[i] * 2;
+    unsigned long skyboxVerticesSize, cubeVerticesSize;
+    float * skyboxVertices = Mesh::createCube(skyboxVerticesSize, MESH_VERTEX, 2);
+    float * cubeVertices = Mesh::createCube(cubeVerticesSize, MESH_NORMAL);;
     
     GLuint cubeVAO, cubeVBO;
     glGenVertexArrays(1, &cubeVAO);
     glBindVertexArray(cubeVAO);
     glGenBuffers(1, &cubeVBO);
     glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), &cubeVertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, cubeVerticesSize, cubeVertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(1);
@@ -56,7 +56,7 @@ void runCubemaps() {
     glBindVertexArray(skyboxVAO);
     glGenBuffers(1, &skyboxVBO);
     glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), skyboxVertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, skyboxVerticesSize, skyboxVertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     

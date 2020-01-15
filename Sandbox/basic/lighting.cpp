@@ -13,6 +13,7 @@
 #include "../shader.h"
 #include "../camera.h"
 #include "../system/system.h"
+#include "../object/mesh.h"
 
 void runLighting() {
     glEnable(GL_DEPTH_TEST);
@@ -35,7 +36,8 @@ void runLighting() {
     lightShader.bindFragDataLocation(0, "fragColor");
     lightShader.compile();
     
-    float vertices[] = CUBE_NORMAL;
+    unsigned long memorySize;
+    float * vertices = Mesh::createCube(memorySize, MESH_NORMAL);
     
     GLuint VBO, cubeVAO;
     glGenVertexArrays(1, &cubeVAO);
@@ -43,7 +45,7 @@ void runLighting() {
     
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, memorySize, vertices, GL_STATIC_DRAW);
     
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);

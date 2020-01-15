@@ -14,6 +14,7 @@
 #include "../camera.h"
 #include "../system/system.h"
 #include "../libraries/stb_image.h"
+#include "../object/mesh.h"
 
 unsigned int loadTexture(const char *path);
 
@@ -45,9 +46,20 @@ void runFramebuffer() {
     lightShader.bindFragDataLocation(0, "fragColor");
     lightShader.compile();
     
-    float lightVertices[] = CUBE;
-    float cubeVertices[] = CUBE_NORMAL_TEXTURE;
-    float planeVertices[] = PLANE_NORMAL_TEXTURE;
+    
+    unsigned long lightVerticesSize, cubeVerticesSize;
+    float * lightVertices = Mesh::createCube(lightVerticesSize);
+    float * cubeVertices = Mesh::createCube(cubeVerticesSize, (MESH_NORMAL | MESH_TEXTURE));
+    
+    float planeVertices[] = {
+        -1.0f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f,
+         1.0f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f,
+        -1.0f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f,
+        -1.0f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f,
+         1.0f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f,
+         1.0f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 1.0f
+    };
+    
     float quadVertices[] = {
         -1.0f,  1.0f,  0.0f, 1.0f,
         -1.0f, -1.0f,  0.0f, 0.0f,
@@ -76,7 +88,7 @@ void runFramebuffer() {
     glBindVertexArray(cubeVAO);
     glGenBuffers(1, &cubeVBO);
     glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), &cubeVertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, cubeVerticesSize, cubeVertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(1);
@@ -89,7 +101,7 @@ void runFramebuffer() {
     glBindVertexArray(planeVAO);
     glGenBuffers(1, &planeVBO);
     glBindBuffer(GL_ARRAY_BUFFER, planeVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(planeVertices), &planeVertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(planeVertices), planeVertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(1);
@@ -102,7 +114,7 @@ void runFramebuffer() {
     glBindVertexArray(quadVAO);
     glGenBuffers(1, &quadVBO);
     glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(1);
@@ -113,7 +125,7 @@ void runFramebuffer() {
     glBindVertexArray(lightVAO);
     glGenBuffers(1, &lightVBO);
     glBindBuffer(GL_ARRAY_BUFFER, lightVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(lightVertices), lightVertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, lightVerticesSize, lightVertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     
