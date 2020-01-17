@@ -37,7 +37,7 @@ void runMultipleLight() {
     lightShader.compile();
     
     unsigned long memorySize;
-    float * vertices = Mesh::createCube(memorySize, MESH_NORMAL);
+    float * vertices = Mesh::generateCube(memorySize, MESH_NORMAL);
 
     glm::vec3 cubePositions[] = {
         glm::vec3( 0.0f,  0.0f,  0.0f),

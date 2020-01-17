@@ -48,8 +48,8 @@ void runFramebuffer() {
     
     
     unsigned long lightVerticesSize, cubeVerticesSize;
-    float * lightVertices = Mesh::createCube(lightVerticesSize);
-    float * cubeVertices = Mesh::createCube(cubeVerticesSize, (MESH_NORMAL | MESH_TEXTURE));
+    float * lightVertices = Mesh::generateCube(lightVerticesSize);
+    float * cubeVertices = Mesh::generateCube(cubeVerticesSize, (MESH_NORMAL | MESH_TEXTURE));
     
     float planeVertices[] = {
         -1.0f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f,

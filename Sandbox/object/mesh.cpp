@@ -8,7 +8,7 @@
 #include "mesh.h"
 #include "define.h"
 
-float * Mesh::createCube(unsigned long &memorySize, unsigned int details, float scale) {
+float * Mesh::generateCube(unsigned long &memorySize, unsigned int details, float scale) {
     float vertices[8][3] = {
         {-.5,  .5,  .5}, {-.5, -.5,  .5}, { .5,  .5,  .5}, { .5, -.5,  .5},
         { .5,  .5, -.5}, { .5, -.5, -.5}, {-.5,  .5, -.5}, {-.5, -.5, -.5}

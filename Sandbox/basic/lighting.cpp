@@ -37,7 +37,7 @@ void runLighting() {
     lightShader.compile();
     
     unsigned long memorySize;
-    float * vertices = Mesh::createCube(memorySize, MESH_NORMAL);
+    float * vertices = Mesh::generateCube(memorySize, MESH_NORMAL);
     
     GLuint VBO, cubeVAO;
     glGenVertexArrays(1, &cubeVAO);
