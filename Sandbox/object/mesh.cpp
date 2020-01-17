@@ -54,68 +54,60 @@ float * Mesh::generateCube(unsigned long &memorySize, unsigned int details, floa
 }
 
 
-unsigned long Mesh::createSphere(std::vector<float> &vertices, std::vector<int> &indices, int wedge, int segment, float radius) {
-    std::vector<float> normals;
-    std::vector<float> texCoords;
+void Mesh::createSphere(int wedge, int segment) {
+    float x, y, z, xz;
+    float s, t;
 
-    float x, y, z, xz;                              // vertex position
-    float nx, ny, nz, lengthInv = 1.0f / radius;    // vertex normal
-    float s, t;                                     // vertex texCoord
-
-    float segmentStep = 2 * PI * 1 / segment;
+    float segmentStep = -2 * PI * 1 / segment;  // counter-clockwise
     float wedgeStep = PI * 1 / wedge;
     float segmentAngle, wedgeAngle;
 
     for(int i = 1; i < wedge; i++) {
-        wedgeAngle = i * wedgeStep;                 // starting from 0 to pi
-        y  = radius * cosf(wedgeAngle);             // r * cos(u)
-        xz = radius * sinf(wedgeAngle);             // r * sin(u)
+        wedgeAngle = i * wedgeStep;             // starting from 0 to pi
+        y  = cosf(wedgeAngle);                  // r * cos(u)
+        xz = sinf(wedgeAngle);                  // r * sin(u)
 
         for(int j = 0; j < segment; j++) {
-            segmentAngle = j * segmentStep;         // starting from 0 to 2pi
+            segmentAngle = j * segmentStep;     // starting from 0 to 2pi
+            x = xz * cosf(segmentAngle);        // r * sin(u) * cos(v)
+            z = xz * sinf(segmentAngle);        // r * sin(u) * sin(v)
             
-            x = xz * cosf(segmentAngle);            // r * sin(u) * cos(v)
-            z = xz * sinf(segmentAngle);            // r * sin(u) * sin(v)
             vertices.insert(vertices.end(), { x, y, z });
+            normals .insert(normals .end(), { x, y, z });
 
-            // normalized vertex normal (nx, ny, nz)
-            nx = x * lengthInv;
-            ny = y * lengthInv;
-            nz = z * lengthInv;
-            vertices.insert(vertices.end(), { nx, ny, nz });
-
-            // vertex tex coord (s, t) range between [0, 1]
-            s = (float)j / segment;
-            t = (float)i / wedge;
-            texCoords.push_back(s);
-            texCoords.push_back(t);
+            s = (float)j / segment;             // vertex tex coord (s, t)
+            t = (float)i / wedge;               // range between [0, 1]
+            texCoords.insert(texCoords.end(), { s, t });
         }
     }
-    vertices.insert(vertices.end(), { 0, radius, 0 });
     vertices.insert(vertices.end(), { 0, 1, 0 });
+    normals .insert(normals .end(), { 0, 1, 0 });
     
-    vertices.insert(vertices.end(), { 0, -radius, 0 });
     vertices.insert(vertices.end(), { 0, -1, 0 });
+    normals .insert(normals .end(), { 0, -1, 0 });
     
     int w1, w2;
     int last   = (wedge-1) * segment - 1;
     int top    = last + 1;
     int bottom = last + 2;
     for(int i = 0; i < segment; i++) {
-        int d = (i+1) % segment;
-        indices.insert(indices.end(), { top, i, d });
+        int d = (i + 1) % segment;
+        indices.insert(indices.end(), { top   , i     , d      });
         indices.insert(indices.end(), { bottom, last-i, last-d });
     }
     for(int i = 0; i < wedge-2; i++) {
-        w1 = i  * segment;      // beginning of current wedge
-        w2 = w1 + segment;      // beginning of next wedge
+        w1 = i  * segment;
+        w2 = w1 + segment;
 
         for(int j = 0; j < segment; j++) {
-            int d = (j+1) % segment;
+            int d = (j + 1) % segment;
             indices.insert(indices.end(), { w1+j, w2+j, w1+d });
             indices.insert(indices.end(), { w1+d, w2+j, w2+d });
         }
     }
-
-    return sizeof(float) * vertices.size();
 }
+
+unsigned long Mesh::sizeofVertices() { return sizeof(float) * vertices.size(); }
+unsigned long Mesh::sizeofNormals() { return sizeof(float) * normals.size(); }
+unsigned long Mesh::sizeofTexCoords() { return sizeof(float) * texCoords.size(); }
+unsigned long Mesh::sizeofIndices() { return sizeof(int) * indices.size(); }

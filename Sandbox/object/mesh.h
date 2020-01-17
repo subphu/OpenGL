@@ -19,8 +19,13 @@ public:
     std::vector<int> indices;
     
     
-    static unsigned long createSphere(std::vector<float> &vertices, std::vector<int> &indices, int stacks = 10, int sectors = 20, float radius = 1);
     static float * generateCube(unsigned long &memorySize, unsigned int details = MESH_VERTEX, float scale = 1);
+    
+    void createSphere(int wedge = 10, int segment = 20);
+    unsigned long sizeofVertices();
+    unsigned long sizeofNormals();
+    unsigned long sizeofTexCoords();
+    unsigned long sizeofIndices();
     
 private:
     

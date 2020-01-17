@@ -23,6 +23,7 @@ void renderSphere();
 
 void runCubemaps() {
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
     
     System &system = System::instance();
     Size<int> size = system.getFramebufferSize();
@@ -38,27 +39,28 @@ void runCubemaps() {
     skyboxShader.addShaderFrom("shader/basic/skybox.frag", GL_FRAGMENT_SHADER);
     skyboxShader.compile();
     
-    std::vector<float> vertices;
-    std::vector<int> indices;
-    unsigned long sphereSize = Mesh::createSphere(vertices, indices, 20, 40);
+    Mesh sphere = Mesh();
+    sphere.createSphere(25, 50);
 
-    LOG indices.size() ENDL;
     unsigned int sphereVAO, sphereVBO, sphereEBO;
     glGenVertexArrays(1, &sphereVAO);
     glBindVertexArray(sphereVAO);
     glGenBuffers(1, &sphereVBO);
     glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
-    glBufferData(GL_ARRAY_BUFFER, sphereSize, &vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sphere.sizeofVertices() + sphere.sizeofNormals(), NULL, GL_STATIC_DRAW);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sphere.sizeofVertices(), &sphere.vertices[0]);
+    glBufferSubData(GL_ARRAY_BUFFER, sphere.sizeofVertices(), sphere.sizeofNormals(), &sphere.normals[0]);
     glGenBuffers(1, &sphereEBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sphereEBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), &indices[0], GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sphere.sizeofIndices(), &sphere.indices[0], GL_STATIC_DRAW);
+    
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)(sphere.sizeofVertices()));
     
     unsigned long skyboxVerticesSize;
-    float * skyboxVertices = Mesh::createCube(skyboxVerticesSize, MESH_VERTEX, 2);
+    float * skyboxVertices = Mesh::generateCube(skyboxVerticesSize, MESH_VERTEX, 2);
     
     GLuint skyboxVAO, skyboxVBO;
     glGenVertexArrays(1, &skyboxVAO);
@@ -129,6 +131,7 @@ void runCubemaps() {
         
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glCullFace(GL_BACK);
         
         shader.use();
         shader.setUniformMatrix4fv("view", camera.getViewMatrix());
@@ -139,8 +142,9 @@ void runCubemaps() {
         shader.setUniformMatrix4fv("model", glm::mat4(1.0f));
         
         glBindVertexArray(sphereVAO);
-        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-        
+        glDrawElements(GL_TRIANGLES, (int)sphere.indices.size(), GL_UNSIGNED_INT, 0);
+
+        glCullFace(GL_FRONT);
         glDepthFunc(GL_LEQUAL);
         skyboxShader.use();
         skyboxShader.setUniformMatrix4fv("view", glm::mat4(glm::mat3(camera.getViewMatrix())));
