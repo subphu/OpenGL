@@ -6,6 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <iostream>
+#include <vector>
 #include <cmath>
 #include <unistd.h>
 
@@ -18,6 +19,7 @@
 #include "../object/mesh.h"
 
 unsigned int loadCubemap(std::string *faces);
+void renderSphere();
 
 void runCubemaps() {
     glEnable(GL_DEPTH_TEST);
@@ -36,20 +38,27 @@ void runCubemaps() {
     skyboxShader.addShaderFrom("shader/basic/skybox.frag", GL_FRAGMENT_SHADER);
     skyboxShader.compile();
     
-    unsigned long skyboxVerticesSize, cubeVerticesSize;
-    float * skyboxVertices = Mesh::createCube(skyboxVerticesSize, MESH_VERTEX, 2);
-    float * cubeVertices = Mesh::createCube(cubeVerticesSize, MESH_NORMAL);;
-    
-    GLuint cubeVAO, cubeVBO;
-    glGenVertexArrays(1, &cubeVAO);
-    glBindVertexArray(cubeVAO);
-    glGenBuffers(1, &cubeVBO);
-    glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
-    glBufferData(GL_ARRAY_BUFFER, cubeVerticesSize, cubeVertices, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
+    std::vector<float> vertices;
+    std::vector<int> indices;
+    unsigned long sphereSize = Mesh::createSphere(vertices, indices, 20, 40);
+
+    LOG indices.size() ENDL;
+    unsigned int sphereVAO, sphereVBO, sphereEBO;
+    glGenVertexArrays(1, &sphereVAO);
+    glBindVertexArray(sphereVAO);
+    glGenBuffers(1, &sphereVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
+    glBufferData(GL_ARRAY_BUFFER, sphereSize, &vertices[0], GL_STATIC_DRAW);
+    glGenBuffers(1, &sphereEBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sphereEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), &indices[0], GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    
+    unsigned long skyboxVerticesSize;
+    float * skyboxVertices = Mesh::createCube(skyboxVerticesSize, MESH_VERTEX, 2);
     
     GLuint skyboxVAO, skyboxVBO;
     glGenVertexArrays(1, &skyboxVAO);
@@ -126,10 +135,11 @@ void runCubemaps() {
         shader.setUniformMatrix4fv("projection", camera.getProjection(ratio));
         shader.setUniform1i("reflection", reflection);
         shader.setUniform1f("refractRatio", refractRatio);
-        
-        glBindVertexArray(cubeVAO);
+        shader.setUniform3f("viewPos", camera.getPosition());
         shader.setUniformMatrix4fv("model", glm::mat4(1.0f));
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        
+        glBindVertexArray(sphereVAO);
+        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
         
         glDepthFunc(GL_LEQUAL);
         skyboxShader.use();
@@ -146,9 +156,10 @@ void runCubemaps() {
         system.pollEvents();
     }
     
-    glDeleteVertexArrays(1, &cubeVAO);
+    glDeleteVertexArrays(1, &sphereVAO);
     glDeleteVertexArrays(1, &skyboxVAO);
-    glDeleteBuffers(1, &cubeVBO);
+    glDeleteBuffers(1, &sphereEBO);
+    glDeleteBuffers(1, &sphereVBO);
     glDeleteBuffers(1, &skyboxVBO);
 }
 
