@@ -94,5 +94,6 @@ void runTexture() {
     }
 
     glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &EBO);
     glDeleteBuffers(1, &VBO);
 }

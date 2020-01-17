@@ -11,8 +11,8 @@ out vec3 Normal;
 out vec3 Position;
 
 void main() {
-    Normal = mat3(transpose(inverse(model * view))) * normal;
-    Position = vec3(model * view * vec4(position, 1.0));
+    Normal = mat3(transpose(inverse(model))) * normal;
+    Position = vec3(model * vec4(position, 1.0));
     gl_Position = projection * view * model * vec4(position, 1.0);
 }
 
