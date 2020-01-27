@@ -127,8 +127,10 @@ vec3 calcLight(Light light, vec3 direction, vec3 normal, vec3 viewDir) {
     float cosAngle = max(dot(normal, direction), 0.0);
     vec3 diffuse = light.diffuse * cosAngle * diffuse;
     
-    vec3 reflectDir = reflect(-direction, normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
+//    vec3 reflectDir = reflect(-direction, normal);
+//    use blinn pong
+    vec3 halfwayDir = normalize(direction + viewDir);
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), shininess);
     vec3 specular = light.specular * spec * specular;
     return (ambient + diffuse + specular);
 }
