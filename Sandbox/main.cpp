@@ -8,8 +8,8 @@
 #include "system/system.h"
 
 std::string NAME = "Sandbox";
-GLuint WIDTH = 600;
-GLuint HEIGHT = 600;
+GLuint WIDTH = 900;
+GLuint HEIGHT = 900;
 
 int main() {
     System &system = System::instance();
@@ -20,7 +20,7 @@ int main() {
     system.initGlLibrary();
     system.settingInput();
     
-    runCubemaps();
+    runInstancing();
     
     system.closeWindow();
     

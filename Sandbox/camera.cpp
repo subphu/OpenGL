@@ -17,7 +17,7 @@
 #define SPEED     0.10f
 #define SENSITIVITY   0.1f
 #define VIEW_DISTANCE 1000.0f
-#define VIEW_ANGLE    45.0f
+#define VIEW_ANGLE    60.0f
 
 #define YAW   0.0f
 #define PITCH 0.0f
