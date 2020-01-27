@@ -19,7 +19,6 @@
 #include "../object/mesh.h"
 
 unsigned int loadCubemap(std::string *faces);
-void renderSphere();
 
 void runCubemaps() {
     glEnable(GL_DEPTH_TEST);

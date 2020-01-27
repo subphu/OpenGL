@@ -257,6 +257,7 @@ void runFramebuffer() {
         lightShader.use();
         lightShader.setUniformMatrix4fv("projection", camera.getProjection(ratio));
         lightShader.setUniformMatrix4fv("view", camera.getViewMatrix());
+        lightShader.setUniform2f("screenSize", size.width, size.height);
         
         glBindVertexArray(lightVAO);
         for (unsigned int i = 0; i < 4; i++) {

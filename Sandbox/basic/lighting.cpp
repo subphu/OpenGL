@@ -119,6 +119,7 @@ void runLighting() {
         lightShader.setUniform3f("lightColor", lightColor);
         lightShader.setUniformMatrix4fv("projection", camera.getProjection(ratio));
         lightShader.setUniformMatrix4fv("view", camera.getViewMatrix());
+        lightShader.setUniform2f("screenSize", size.width, size.height);
         
         model = glm::mat4(1.0f);
         model = glm::translate(model, lightPos);
