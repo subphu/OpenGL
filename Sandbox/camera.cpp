@@ -16,7 +16,7 @@
 #define MAX_PITCH 89.0f
 #define SPEED     0.10f
 #define SENSITIVITY   0.1f
-#define VIEW_DISTANCE 100.0f
+#define VIEW_DISTANCE 1000.0f
 #define VIEW_ANGLE    45.0f
 
 #define YAW   0.0f
@@ -72,6 +72,10 @@ void Camera::setInvertedAxis(bool value) {
 
 void Camera::setLockFocus(bool value) {
     lockFocus = value;
+}
+
+void Camera::setSpeed(float value) {
+    speed = value;
 }
 
 void Camera::setPosition(glm::vec3 pos) {

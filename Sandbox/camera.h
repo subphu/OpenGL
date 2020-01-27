@@ -13,6 +13,7 @@ public:
     void reset();
     void setInvertedAxis(bool value);
     void setLockFocus(bool value);
+    void setSpeed(float value);
     void setPosition(glm::vec3 position);
     void lookAt(glm::vec3 focusPos);
     
