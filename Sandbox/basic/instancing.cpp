@@ -82,19 +82,19 @@ void runInstancing() {
     srand(system.getTime());
     float radius = 150.0;
     float offset = 50.0f;
-    int max = 2 * offset * 100;
+    int max = 2 * offset;
     for (unsigned int i = 0; i < amount; i++) {
         glm::mat4 model = glm::mat4(1.0f);
         
         float angle = (float)i / (float)amount * 360.0f;
-        float x = (rand() % max) / 100.0f - offset + sin(angle) * radius;
-        float y = (rand() % max) / 100.0f - offset;
-        float z = (rand() % max) / 100.0f - offset + cos(angle) * radius;
+        float x = ((rand() % max) - offset + radius) * sin(angle);
+        float y = (rand() % max) - offset;
+        float z = ((rand() % max) - offset + radius) * cos(angle);
         model = glm::translate(model, glm::vec3(x, y, z));
         
-        float sx = (rand() % 25) / 20.0f + 0.2;
-        float sy = (rand() % 25) / 20.0f + 0.2;
-        float sz = (rand() % 25) / 20.0f + 0.2;
+        float sx = (rand() % 30) / 20.0f + 0.2;
+        float sy = (rand() % 30) / 20.0f + 0.2;
+        float sz = (rand() % 30) / 20.0f + 0.2;
         model = glm::scale(model, glm::vec3(sx, sy, sz));
 
         float rotAngle = (rand() % 360);
@@ -125,7 +125,7 @@ void runInstancing() {
     
     float speed[amount];
     for (unsigned int i = 0; i < amount; i++) {
-        speed[i] = (rand() % 10 + 2) / 100.0;
+        speed[i] = (rand() % 10 + 2) / 50.0;
     }
     
     unsigned int speedBuffer;
