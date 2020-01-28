@@ -23,6 +23,7 @@ void runInstancing() {
     glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_FRAMEBUFFER_SRGB);
     
     System &system = System::instance();
     Size<int> size = system.getFramebufferSize();
@@ -175,7 +176,7 @@ void runInstancing() {
             lag -= frameDelay;
         }
         
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         shader.use();
@@ -196,8 +197,8 @@ void runInstancing() {
         for(int i = 0; i < 3; i++) {
             std::string idx = std::to_string(i);
             shader.setUniform3f("pointLights[" + idx + "].position",glm::vec3(0.0, i*sphereSize - sphereSize, 0.0));
-            shader.setUniform3f("pointLights[" + idx + "].light.ambient", color * 0.1f);
-            shader.setUniform3f("pointLights[" + idx + "].light.diffuse", color * 0.8f);
+            shader.setUniform3f("pointLights[" + idx + "].light.ambient", color * 0.05f);
+            shader.setUniform3f("pointLights[" + idx + "].light.diffuse", color * 0.7f);
             shader.setUniform3f("pointLights[" + idx + "].light.specular", color);
             shader.setUniform1f("pointLights[" + idx + "].constant.linear", 0.005);
             shader.setUniform1f("pointLights[" + idx + "].constant.quadratic", 0.00005);
