@@ -12,3 +12,4 @@ void runMultipleLight();
 void runFramebuffer();
 void runCubemaps();
 void runInstancing();
+void runShadow();
