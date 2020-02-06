@@ -82,7 +82,7 @@ void runCubemaps() {
 
     shader.use();
     shader.setUniform1i("skybox", 0);
-    shader.setUniform1i("reflection", 1);
+    shader.setUniform1i("reflection", true);
 
     skyboxShader.use();
     skyboxShader.setUniform1i("skybox", 0);
@@ -92,7 +92,7 @@ void runCubemaps() {
     float frameDelay = 1.f/60.f;
     
     float refractRatio = 1 / 1.33;
-    int reflection = 0;
+    bool reflection = false;
     bool prevKeyZ = false;
 
     Camera camera(glm::vec3(0.0f, 2.0f, 8.0f));

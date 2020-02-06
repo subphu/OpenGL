@@ -133,7 +133,7 @@ void runFramebuffer() {
     unsigned int floorTexture = loadTexture("resources/texture/brickwall.jpg");
 
     shader.use();
-    shader.setUniform1i("useTexture", 1);
+    shader.setUniform1i("useTexture", true);
     shader.setUniform1i("material.textureDiffuse", 0);
 
     screenShader.use();

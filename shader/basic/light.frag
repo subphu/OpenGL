@@ -2,7 +2,7 @@
 
 uniform vec3 lightColor;
 uniform vec2 screenSize;
-uniform int glow;
+uniform bool glow;
 
 in vec3 Center;
 in vec3 Corner;
@@ -10,7 +10,7 @@ in vec3 Corner;
 out vec4 fragColor;
 
 void main() {
-    if (glow != 1) {
+    if (!glow) {
         fragColor = vec4(lightColor, 1.0);
         return;
     }
