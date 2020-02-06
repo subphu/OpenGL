@@ -21,7 +21,7 @@ void runPerspective() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     System &system = System::instance();
-    Size<int> size = system.getWindowSize();
+    Size<int> size = system.getFramebufferSize();
     
     Shader shader = Shader();
     shader.addShaderFrom("shader/basic/perspective.vert", GL_VERTEX_SHADER);
