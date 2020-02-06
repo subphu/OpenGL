@@ -14,6 +14,7 @@
 #define PROGRAM "PROGRAM"
 #define VERTEX "VERTEX"
 #define FRAGMENT "FRAGMENT"
+#define GEOMETRY "GEOMETRY"
 
 Shader::Shader() {
     ID = glCreateProgram();
@@ -32,7 +33,9 @@ void Shader::addShader(const char* code, unsigned int type) {
     unsigned int shader = glCreateShader(type);
     glShaderSource(shader, 1, &code, NULL);
     glCompileShader(shader);
-    checkCompileErrors(shader, type == GL_VERTEX_SHADER ? VERTEX : FRAGMENT);
+    checkCompileErrors(shader,
+                       type == GL_VERTEX_SHADER ? VERTEX :
+                       type == GL_FRAGMENT_SHADER ? FRAGMENT : GEOMETRY);
     glAttachShader(ID, shader);
     glDeleteShader(shader);
 }
