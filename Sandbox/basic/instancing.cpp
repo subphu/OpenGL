@@ -80,7 +80,7 @@ void runInstancing() {
     unsigned int amount = 100000;
     glm::mat4* modelMatrices = new glm::mat4[amount];
     srand(system.getTime());
-    float radius = 150.0;
+    float radius = 160.0;
     float offset = 50.0f;
     int max = 2 * offset;
     for (unsigned int i = 0; i < amount; i++) {
@@ -125,7 +125,7 @@ void runInstancing() {
     
     float speed[amount];
     for (unsigned int i = 0; i < amount; i++) {
-        speed[i] = (rand() % 10 + 2) / 50.0;
+        speed[i] = (rand() % 10 + 2) / 160.0;
     }
     
     unsigned int speedBuffer;
