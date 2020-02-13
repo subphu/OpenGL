@@ -4,10 +4,10 @@
 #include <iostream>
 
 #include "tutorial.h"
-#include "../define.h"
-#include "../shader.h"
-#include "../system/system.h"
-#include "../libraries/stb_image.h"
+#include "define.h"
+#include "shader/shader.h"
+#include "system/system.h"
+#include "libraries/stb_image.h"
 
 void runTexture() {
     glEnable(GL_BLEND);

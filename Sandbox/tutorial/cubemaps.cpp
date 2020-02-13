@@ -11,12 +11,12 @@
 #include <unistd.h>
 
 #include "tutorial.h"
-#include "../define.h"
-#include "../shader.h"
-#include "../camera.h"
-#include "../system/system.h"
-#include "../libraries/stb_image.h"
-#include "../object/mesh.h"
+#include "define.h"
+#include "shader/shader.h"
+#include "camera/camera.h"
+#include "system/system.h"
+#include "libraries/stb_image.h"
+#include "object/mesh.h"
 
 unsigned int loadCubemap(std::string *faces);
 

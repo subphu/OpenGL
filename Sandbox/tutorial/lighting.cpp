@@ -9,11 +9,11 @@
 #include <cmath>
 
 #include "tutorial.h"
-#include "../define.h"
-#include "../shader.h"
-#include "../camera.h"
-#include "../system/system.h"
-#include "../object/mesh.h"
+#include "define.h"
+#include "shader/shader.h"
+#include "camera/camera.h"
+#include "system/system.h"
+#include "object/mesh.h"
 
 void runLighting() {
     glEnable(GL_DEPTH_TEST);

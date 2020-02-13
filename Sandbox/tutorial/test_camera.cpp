@@ -9,12 +9,12 @@
 #include <cmath>
 
 #include "tutorial.h"
-#include "../define.h"
-#include "../shader.h"
-#include "../camera.h"
-#include "../system/system.h"
-#include "../libraries/stb_image.h"
-#include "../object/mesh.h"
+#include "define.h"
+#include "shader/shader.h"
+#include "camera/camera.h"
+#include "system/system.h"
+#include "libraries/stb_image.h"
+#include "object/mesh.h"
 
 Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));
 
