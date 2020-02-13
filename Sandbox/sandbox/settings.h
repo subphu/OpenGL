@@ -11,6 +11,7 @@ namespace sandbox {
         Size<int> windowSize = { 900, 900 };
         Size<int> bufferSize = { 900, 900 };
         float ratio = 1.f;
+        float frameTime = 1.f/60.f;
         
         static Settings& instance() {
             static Settings instance;
