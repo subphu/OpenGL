@@ -8,14 +8,17 @@
 #include <iostream>
 #include <cmath>
 
-#include "basic.h"
+#include "tutorial.h"
 #include "../define.h"
 #include "../shader.h"
+#include "../camera.h"
 #include "../system/system.h"
 #include "../libraries/stb_image.h"
 #include "../object/mesh.h"
 
-void runPerspective() {
+Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));
+
+void runTestCamera() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -24,8 +27,8 @@ void runPerspective() {
     Size<int> size = system.getFramebufferSize();
     
     Shader shader = Shader();
-    shader.addShaderFrom("shader/basic/perspective.vert", GL_VERTEX_SHADER);
-    shader.addShaderFrom("shader/basic/perspective.frag", GL_FRAGMENT_SHADER);
+    shader.addShaderFrom("shader/tutorial/perspective.vert", GL_VERTEX_SHADER);
+    shader.addShaderFrom("shader/tutorial/perspective.frag", GL_FRAGMENT_SHADER);
     shader.bindFragDataLocation(0, "fragColor");
     shader.compile();
     
@@ -80,22 +83,41 @@ void runPerspective() {
     
     shader.use();
     shader.setUniform1i("texture0", 0);
-
-    glm::mat4 projection = glm::mat4(1.0f);
-    projection = glm::perspective(glm::radians(45.0f), (float)size.width / (float)size.height, 0.1f, 100.0f);
-    shader.setUniformMatrix4fv("projection", projection);
     
+    float lag = 0;
+    float lastTime = system.getTime();
+    float frameDelay = 1.f/60.f;
+
+    auto scroll = [](float xoffset, float yoffset) { camera.zoom(yoffset); };
+
+    system.disableCursor();
+    system.setScrollCallback(scroll);
+
     while (system.getWindowState()) {
         if (system.getKeyState(key_esc)) system.closeWindow();
+        
+        while (lag > frameDelay) {
+            glm::vec3 movement = glm::vec3(0.f, 0.f, 0.f);
+            movement.x = system.getKeyState(key_d) - system.getKeyState(key_a);
+            movement.y = system.getKeyState(key_q) - system.getKeyState(key_e);
+            movement.z = system.getKeyState(key_w) - system.getKeyState(key_s);
+            camera.move(movement);
+            
+            glm::vec2 delta = system.getCursorMovement();
+            camera.turn(delta);
+            
+            lag -= frameDelay;
+        }
         
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         shader.use();
-        
-        glm::mat4 view = glm::mat4(1.0f);
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-        shader.setUniformMatrix4fv("view", view);
+
+        float ratio = (float)size.width / (float)size.height;
+        shader.setUniformMatrix4fv("projection", camera.getProjection(ratio));
+        shader.setUniformMatrix4fv("view", camera.getViewMatrix());
+
 
         glBindVertexArray(VAO);
         for (unsigned int i = 0; i < 10; i++) {
@@ -110,6 +132,9 @@ void runPerspective() {
         
         system.swapBuffer();
         system.pollEvents();
+        
+        lag += system.getTime() - lastTime;
+        lastTime = system.getTime();
     }
 
     glDeleteVertexArrays(1, &VAO);

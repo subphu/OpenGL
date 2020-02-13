@@ -10,7 +10,7 @@
 #include <cmath>
 #include <unistd.h>
 
-#include "basic.h"
+#include "tutorial.h"
 #include "../define.h"
 #include "../shader.h"
 #include "../camera.h"
@@ -57,19 +57,19 @@ void runShadow() {
     ratio = (float)size.width / (float)size.height;
     
     Shader shader = Shader();
-    shader.addShaderFrom("shader/basic/shadow.vert", GL_VERTEX_SHADER);
-    shader.addShaderFrom("shader/basic/shadow.frag", GL_FRAGMENT_SHADER);
+    shader.addShaderFrom("shader/tutorial/shadow.vert", GL_VERTEX_SHADER);
+    shader.addShaderFrom("shader/tutorial/shadow.frag", GL_FRAGMENT_SHADER);
     shader.compile();
     
     Shader depthShader = Shader();
-    depthShader.addShaderFrom("shader/basic/depth.vert", GL_VERTEX_SHADER);
-    depthShader.addShaderFrom("shader/basic/depth.geom", GL_GEOMETRY_SHADER);
-    depthShader.addShaderFrom("shader/basic/depth.frag", GL_FRAGMENT_SHADER);
+    depthShader.addShaderFrom("shader/tutorial/depth.vert", GL_VERTEX_SHADER);
+    depthShader.addShaderFrom("shader/tutorial/depth.geom", GL_GEOMETRY_SHADER);
+    depthShader.addShaderFrom("shader/tutorial/depth.frag", GL_FRAGMENT_SHADER);
     depthShader.compile();
     
     Shader lightShader = Shader();
-    lightShader.addShaderFrom("shader/basic/light.vert", GL_VERTEX_SHADER);
-    lightShader.addShaderFrom("shader/basic/light.frag", GL_FRAGMENT_SHADER);
+    lightShader.addShaderFrom("shader/tutorial/light.vert", GL_VERTEX_SHADER);
+    lightShader.addShaderFrom("shader/tutorial/light.frag", GL_FRAGMENT_SHADER);
     lightShader.compile();
     
     Size<int> shadowSize = {512, 512};

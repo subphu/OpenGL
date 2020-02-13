@@ -10,7 +10,7 @@
 #include <cmath>
 #include <unistd.h>
 
-#include "basic.h"
+#include "tutorial.h"
 #include "../define.h"
 #include "../shader.h"
 #include "../camera.h"
@@ -30,13 +30,13 @@ void runInstancing() {
     float ratio = (float)size.width / (float)size.height;
     
     Shader shader = Shader();
-    shader.addShaderFrom("shader/basic/instancing.vert", GL_VERTEX_SHADER);
-    shader.addShaderFrom("shader/basic/instancing.frag", GL_FRAGMENT_SHADER);
+    shader.addShaderFrom("shader/tutorial/instancing.vert", GL_VERTEX_SHADER);
+    shader.addShaderFrom("shader/tutorial/instancing.frag", GL_FRAGMENT_SHADER);
     shader.compile();
     
     Shader lightShader = Shader();
-    lightShader.addShaderFrom("shader/basic/light.vert", GL_VERTEX_SHADER);
-    lightShader.addShaderFrom("shader/basic/light.frag", GL_FRAGMENT_SHADER);
+    lightShader.addShaderFrom("shader/tutorial/light.vert", GL_VERTEX_SHADER);
+    lightShader.addShaderFrom("shader/tutorial/light.frag", GL_FRAGMENT_SHADER);
     lightShader.compile();
         
     Mesh sphere = Mesh();

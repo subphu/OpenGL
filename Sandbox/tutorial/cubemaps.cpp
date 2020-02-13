@@ -10,7 +10,7 @@
 #include <cmath>
 #include <unistd.h>
 
-#include "basic.h"
+#include "tutorial.h"
 #include "../define.h"
 #include "../shader.h"
 #include "../camera.h"
@@ -29,13 +29,13 @@ void runCubemaps() {
     float ratio = (float)size.width / (float)size.height;
     
     Shader shader = Shader();
-    shader.addShaderFrom("shader/basic/cubemap.vert", GL_VERTEX_SHADER);
-    shader.addShaderFrom("shader/basic/cubemap.frag", GL_FRAGMENT_SHADER);
+    shader.addShaderFrom("shader/tutorial/cubemap.vert", GL_VERTEX_SHADER);
+    shader.addShaderFrom("shader/tutorial/cubemap.frag", GL_FRAGMENT_SHADER);
     shader.compile();
     
     Shader skyboxShader = Shader();
-    skyboxShader.addShaderFrom("shader/basic/skybox.vert", GL_VERTEX_SHADER);
-    skyboxShader.addShaderFrom("shader/basic/skybox.frag", GL_FRAGMENT_SHADER);
+    skyboxShader.addShaderFrom("shader/tutorial/skybox.vert", GL_VERTEX_SHADER);
+    skyboxShader.addShaderFrom("shader/tutorial/skybox.frag", GL_FRAGMENT_SHADER);
     skyboxShader.compile();
     
     Mesh sphere = Mesh();

@@ -8,7 +8,7 @@
 #include <iostream>
 #include <cmath>
 
-#include "basic.h"
+#include "tutorial.h"
 #include "../define.h"
 #include "../shader.h"
 #include "../camera.h"
@@ -25,14 +25,14 @@ void runLighting() {
     float ratio = (float)size.width / (float)size.height;
     
     Shader shader = Shader();
-    shader.addShaderFrom("shader/basic/phong.vert", GL_VERTEX_SHADER);
-    shader.addShaderFrom("shader/basic/phong.frag", GL_FRAGMENT_SHADER);
+    shader.addShaderFrom("shader/tutorial/phong.vert", GL_VERTEX_SHADER);
+    shader.addShaderFrom("shader/tutorial/phong.frag", GL_FRAGMENT_SHADER);
     shader.bindFragDataLocation(0, "fragColor");
     shader.compile();
     
     Shader lightShader = Shader();
-    lightShader.addShaderFrom("shader/basic/light.vert", GL_VERTEX_SHADER);
-    lightShader.addShaderFrom("shader/basic/light.frag", GL_FRAGMENT_SHADER);
+    lightShader.addShaderFrom("shader/tutorial/light.vert", GL_VERTEX_SHADER);
+    lightShader.addShaderFrom("shader/tutorial/light.frag", GL_FRAGMENT_SHADER);
     lightShader.bindFragDataLocation(0, "fragColor");
     lightShader.compile();
     

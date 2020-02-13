@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cmath>
 
-#include "basic.h"
+#include "tutorial.h"
 #include "../define.h"
 #include "../shader.h"
 #include "../system/system.h"
@@ -14,8 +14,8 @@ void runTriangle() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     Shader shader = Shader();
-    shader.addShaderFrom("shader/basic/triangle.vert", GL_VERTEX_SHADER);
-    shader.addShaderFrom("shader/basic/triangle.frag", GL_FRAGMENT_SHADER);
+    shader.addShaderFrom("shader/tutorial/triangle.vert", GL_VERTEX_SHADER);
+    shader.addShaderFrom("shader/tutorial/triangle.frag", GL_FRAGMENT_SHADER);
     shader.bindFragDataLocation(0, "fragColor");
     shader.compile();
     

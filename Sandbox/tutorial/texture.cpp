@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "basic.h"
+#include "tutorial.h"
 #include "../define.h"
 #include "../shader.h"
 #include "../system/system.h"
@@ -14,8 +14,8 @@ void runTexture() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     Shader shader = Shader();
-    shader.addShaderFrom("shader/basic/texture.vert", GL_VERTEX_SHADER);
-    shader.addShaderFrom("shader/basic/texture.frag", GL_FRAGMENT_SHADER);
+    shader.addShaderFrom("shader/tutorial/texture.vert", GL_VERTEX_SHADER);
+    shader.addShaderFrom("shader/tutorial/texture.frag", GL_FRAGMENT_SHADER);
     shader.compile();
     
     float vertices[] = {
