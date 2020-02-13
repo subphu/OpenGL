@@ -3,18 +3,14 @@
 
 #pragma once
 
-#include <iostream>
-
-#include "define.h"
-
 namespace sandbox {
     class Settings {
         
     public:
-        std::string name = "Sandbox";
-        unsigned int width = 900;
-        unsigned int height = 900;
-        
+        const char* name = "Sandbox";
+        Size<int> windowSize = { 900, 900 };
+        Size<int> bufferSize = { 900, 900 };
+        float ratio = 1.f;
         
         static Settings& instance() {
             static Settings instance;
@@ -22,8 +18,8 @@ namespace sandbox {
         }
         
     private:
-        Settings();
-        ~Settings();
+        Settings() { }
+        ~Settings() { }
 
         Settings(Settings const&);
         void operator=(Settings const&);

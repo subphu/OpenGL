@@ -12,15 +12,26 @@
 namespace sandbox {
     
     Sandbox::Sandbox() {
+        System &system = System::instance();
+        Settings &settings = Settings::instance();
+        Size<int> size = settings.windowSize;
         
+        system.settingWindow();
+        system.createWindow(size.width, size.height, settings.name);
+        
+        settings.bufferSize = system.getFramebufferSize();
+        settings.ratio = (float)settings.bufferSize.width / (float)settings.bufferSize.height;
+        
+        system.initGlLibrary();
+        system.settingInput();
+        
+        run();
+        
+        system.closeWindow();
     }
     
     void Sandbox::run() {
-        Settings &settings = Settings::instance();
-        System &system = System::instance();
-        
         using StateRef = std::shared_ptr<State>;
-        
         
     }
 }
