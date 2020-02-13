@@ -15,7 +15,9 @@
 #include "system/system.h"
 #include "object/mesh.h"
 
-void runLighting() {
+using namespace tutorial;
+
+void Tutorial::runLighting() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

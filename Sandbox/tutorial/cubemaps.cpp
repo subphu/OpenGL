@@ -18,9 +18,11 @@
 #include "libraries/stb_image.h"
 #include "object/mesh.h"
 
+using namespace tutorial;
+
 unsigned int loadCubemap(std::string *faces);
 
-void runCubemaps() {
+void Tutorial::runCubemaps() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     

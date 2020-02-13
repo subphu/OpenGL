@@ -16,9 +16,11 @@
 #include "libraries/stb_image.h"
 #include "object/mesh.h"
 
+using namespace tutorial;
+
 Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));
 
-void runTestCamera() {
+void Tutorial::runTestCamera() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

@@ -15,7 +15,9 @@
 #include "system/system.h"
 #include "object/mesh.h"
 
-void runMultipleLight() {
+using namespace tutorial;
+
+void Tutorial::runMultipleLight() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

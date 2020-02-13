@@ -3,13 +3,24 @@
 
 #pragma once
 
-void runTriangle();
-void runTexture();
-void runPerspective();
-void runTestCamera();
-void runLighting();
-void runMultipleLight();
-void runFramebuffer();
-void runCubemaps();
-void runInstancing();
-void runShadow();
+namespace tutorial {
+    class Tutorial {
+        
+    public:
+        Tutorial();
+        
+    private:
+        void runTriangle();
+        void runTexture();
+        void runPerspective();
+        void runTestCamera();
+        void runLighting();
+        void runMultipleLight();
+        void runFramebuffer();
+        void runCubemaps();
+        void runInstancing();
+        void runShadow();
+        
+    };
+
+}

@@ -15,7 +15,9 @@
 #include "libraries/stb_image.h"
 #include "object/mesh.h"
 
-void runPerspective() {
+using namespace tutorial;
+
+void Tutorial::runPerspective() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

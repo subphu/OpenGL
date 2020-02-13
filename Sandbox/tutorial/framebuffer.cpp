@@ -16,9 +16,11 @@
 #include "libraries/stb_image.h"
 #include "object/mesh.h"
 
+using namespace tutorial;
+
 unsigned int loadTexture(const char *path);
 
-void runFramebuffer() {
+void Tutorial::runFramebuffer() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glEnable(GL_CULL_FACE); 

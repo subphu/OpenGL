@@ -18,6 +18,8 @@
 #include "libraries/stb_image.h"
 #include "object/mesh.h"
 
+using namespace tutorial;
+
 float ratio = 0.0;
 int totalPointLights = 4;
 glm::vec3 pointLightPositions[4];
@@ -47,7 +49,7 @@ void setLightUniform(Shader* shader);
 void drawCubes(Shader* shader);
 void drawLightcubes(Shader* shader, Camera* camera);
 
-void runShadow() {
+void Tutorial::runShadow() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glEnable(GL_FRAMEBUFFER_SRGB);

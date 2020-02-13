@@ -18,7 +18,9 @@
 #include "libraries/stb_image.h"
 #include "object/mesh.h"
 
-void runInstancing() {
+using namespace tutorial;
+
+void Tutorial::runInstancing() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
