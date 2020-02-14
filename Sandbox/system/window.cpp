@@ -23,14 +23,24 @@ void System::settingWindow() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 }
 
-void System::createWindow(GLuint width, GLuint height, const char* name) {
-    window = glfwCreateWindow(width, height, name, NULL, NULL);
+void System::createWindow() {
+    window = glfwCreateWindow(settings->windowSize().width,
+                              settings->windowSize().height,
+                              settings->name, NULL, NULL);
     if (window == NULL) exitFailure(WINDOW_FAILED_MESSAGE);
 
     int screenWidth, screenHeight;
     glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
     glfwMakeContextCurrent(window);
     glViewport(0, 0, screenWidth, screenHeight);
+    settings->setBufferSize({ screenWidth, screenHeight });
+}
+
+void System::createWindow(GLuint width, GLuint height, const char* name) {
+    settings = new Settings();
+    settings->name = name;
+    settings->setWindowSize({ (int)width, (int)height });
+    createWindow();
 }
 
 void System::closeWindow() {
@@ -51,13 +61,15 @@ bool System::getWindowState() {
 Size<int> System::getWindowSize() {
     int width, height;
     glfwGetWindowSize(window, &width, &height);
-    return {width, height};
+    settings->setWindowSize({ width, height });
+    return settings->windowSize();
 }
 
 Size<int> System::getFramebufferSize() {
     int width, height;
     glfwGetFramebufferSize(window, &width, &height);
-    return {width, height};
+    settings->setBufferSize({ width, height });
+    return settings->bufferSize();
 }
 
 void System::swapBuffer() {

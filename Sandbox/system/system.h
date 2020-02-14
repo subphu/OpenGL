@@ -33,6 +33,7 @@ enum key {
 class System {
     
 public:
+    Settings* settings;
     glm::vec2 cursorPos;
     
     void initGlLibrary();
@@ -41,6 +42,7 @@ public:
     void disableCursor();
     
     void settingWindow();
+    void createWindow();
     void createWindow(GLuint width, GLuint height, const char* name);
     
     void closeWindow();
