@@ -11,8 +11,9 @@ namespace sandbox {
 
 MainState::~MainState() {}
 MainState::MainState() {
-    settings = System::instance().settings;
-
+    System &system = System::instance();
+    settings = system.settings;
+    
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
@@ -25,18 +26,37 @@ MainState::MainState() {
     meshShader.addShaderFrom("shader/tutorial/light.vert", GL_VERTEX_SHADER);
     meshShader.addShaderFrom("shader/tutorial/light.frag", GL_FRAGMENT_SHADER);
     meshShader.compile();
+    
+    camera.setLockFocus(true);
+    camera.lookAt(glm::vec3(0, 0, 0));
 }
 
 void MainState::load() {
     
 }
 
+void MainState::handleInput() {
+    System &system = System::instance();
+    
+    glm::vec3 movement = glm::vec3(0.f, 0.f, 0.f);
+    movement.x = system.getKeyState(key_d) - system.getKeyState(key_a);
+    movement.y = system.getKeyState(key_q) - system.getKeyState(key_e);
+    movement.z = system.getKeyState(key_w) - system.getKeyState(key_s);
+    camera.move(movement);
+    
+    glm::vec2 delta = system.getCursorMovement();
+    camera.turn(delta);
+    
+}
+
 void MainState::update() {
+    handleInput();
+    
     
 }
 
 void MainState::draw() {
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(.9f, .9f, .9f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     meshShader.use();
     meshShader.setUniform3f("lightColor", glm::vec3(0.1f));

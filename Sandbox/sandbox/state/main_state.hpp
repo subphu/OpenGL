@@ -26,5 +26,7 @@ private:
     Camera camera;
     Mesh mesh;
     Shader meshShader;
+    
+    void handleInput();
 };
 }

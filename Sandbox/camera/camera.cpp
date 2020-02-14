@@ -24,7 +24,7 @@
 
 Camera::Camera() {
     reset();
-    setPosition(glm::vec3(0.0f, 0.0f, 5.0f));
+    setPosition(glm::vec3(0.0f, 1.0f, 5.0f));
     lookAt(glm::vec3(0, 0, 0));
     updateVector();
 }
