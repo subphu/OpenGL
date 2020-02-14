@@ -33,7 +33,7 @@ bool System::getKeyState(int key) {
     return glfwGetKey(window, key);
 }
 
-glm::vec2 System::getCursorPosition() {
+glm::vec2 System::updateCursorPosition() {
     double x, y;
     glfwGetCursorPos(window, &x, &y);
     cursorPos = glm::vec2(x, -y);
@@ -42,10 +42,11 @@ glm::vec2 System::getCursorPosition() {
 
 glm::vec2 System::getCursorMovement() {
     if (cursorPos.x == 0 && cursorPos.y == 0) {
-        getCursorPosition();
+        updateCursorPosition();
         return glm::vec2(0, 0);
     }
     glm::vec2 lastPos = cursorPos;
-    getCursorPosition();
-    return glm::vec2(cursorPos.x - lastPos.x, cursorPos.y - lastPos.y);
+    updateCursorPosition();
+    glm::vec2 move = glm::vec2(cursorPos.x - lastPos.x, cursorPos.y - lastPos.y);
+    return glm::clamp(move, glm::vec2(-99, -99), glm::vec2(99, 99));
 }

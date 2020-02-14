@@ -56,7 +56,7 @@ public:
     Size<int> getFramebufferSize();
     
     bool getKeyState(int key);
-    glm::vec2 getCursorPosition();
+    glm::vec2 updateCursorPosition();
     glm::vec2 getCursorMovement();
     
     void setScrollCallback(void (*callback)(float, float));
