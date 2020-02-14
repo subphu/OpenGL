@@ -54,6 +54,24 @@ float * Mesh::generateCube(unsigned long &memorySize, unsigned int details, floa
     return data;
 }
 
+void Mesh::createCube() {
+    vertices = {
+        -.5,  .5,  .5,   -.5, -.5,  .5,    .5,  .5,  .5,    .5, -.5,  .5,
+         .5,  .5, -.5,    .5, -.5, -.5,   -.5,  .5, -.5,   -.5, -.5, -.5
+    };
+    indices = {
+        6, 7, 0, 0, 7, 1,   2, 3, 4, 4, 3, 5,
+        1, 7, 3, 3, 7, 5,   6, 0, 4, 4, 0, 2,
+        4, 5, 6, 6, 5, 7,   0, 1, 2, 2, 1, 3
+    };
+    for (int i = 0; i < 8; i++) {
+        glm::vec3 n = glm::normalize(glm::vec3(vertices[0], vertices[1], vertices[2]));
+        normals.push_back(n.x);
+        normals.push_back(n.y);
+        normals.push_back(n.z);
+    }
+}
+
 
 void Mesh::createSphere(int wedge, int segment) {
     float x, y, z, xz;
@@ -83,9 +101,11 @@ void Mesh::createSphere(int wedge, int segment) {
     }
     vertices.insert(vertices.end(), { 0, 1, 0 });
     normals .insert(normals .end(), { 0, 1, 0 });
+    texCoords.insert(texCoords.end(), { 0, 0 });
     
     vertices.insert(vertices.end(), { 0, -1, 0 });
     normals .insert(normals .end(), { 0, -1, 0 });
+    texCoords.insert(texCoords.end(), { 1, 1 });
     
     int w1, w2;
     int last   = (wedge-1) * segment - 1;
@@ -107,6 +127,46 @@ void Mesh::createSphere(int wedge, int segment) {
         }
     }
 }
+
+void Mesh::genBuffer() {
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+    glGenBuffers(1, &vao);
+    glBindBuffer(GL_ARRAY_BUFFER, vao);
+    glBufferData(GL_ARRAY_BUFFER, sizeofVertices() + sizeofNormals(), NULL, GL_STATIC_DRAW);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeofVertices(), &vertices[0]);
+    glBufferSubData(GL_ARRAY_BUFFER, sizeofVertices(), sizeofNormals(), &normals[0]);
+    glGenBuffers(1, &ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeofIndices(), &indices[0], GL_STATIC_DRAW);
+    
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)(sizeofVertices()));
+}
+
+void Mesh::draw() {
+    glBindVertexArray(vao);
+    glDrawElements(GL_TRIANGLES, (int)indices.size(), GL_UNSIGNED_INT, 0);
+}
+
+void Mesh::scale(glm::vec3 size) {
+    model = glm::scale(model, size);
+}
+
+void Mesh::rotate(float angle, glm::vec3 axis) {
+    model = glm::rotate(model, glm::radians(angle), axis);
+}
+
+void Mesh::translate(glm::vec3 translation) {
+    model = glm::translate(model, translation);
+}
+
+glm::mat4 Mesh::getMatrix() {
+    return model;
+}
+
 
 unsigned long Mesh::sizeofVertices() { return sizeof(float) * vertices.size(); }
 unsigned long Mesh::sizeofNormals() { return sizeof(float) * normals.size(); }
