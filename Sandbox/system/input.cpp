@@ -1,8 +1,6 @@
 //  Copyright © 2019 Subph. All rights reserved.
 //
 
-#include <iostream>
-
 #include "system.h"
 
 void System::pollEvents() {
@@ -41,7 +39,6 @@ glm::vec2 System::getCursorPosition() {
     cursorPos = glm::vec2(x, -y);
     return cursorPos;
 }
-
 
 glm::vec2 System::getCursorMovement() {
     if (cursorPos.x == 0 && cursorPos.y == 0) {

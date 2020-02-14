@@ -1,11 +1,6 @@
 //  Copyright © 2019 Subph. All rights reserved.
 //
 
-#define GLEW_STATIC
-
-#include <GL/glew.h>
-#include <iostream>
-
 #include "system.h"
 
 #define WINDOW_FAILED_MESSAGE "Failed to create GLFW window"

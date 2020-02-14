@@ -3,6 +3,8 @@
 
 #pragma once
 
+#define GLEW_STATIC
+
 #include <GL/glew.h>
 #include <iostream>
 
@@ -13,3 +15,8 @@
 #define ENDL << std::endl
 #define SPACE << " " <<
 
+
+
+template<typename T> struct Size {
+    T width, height;
+};

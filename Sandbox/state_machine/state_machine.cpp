@@ -1,3 +1,6 @@
+//  Copyright © 2019 Subph. All rights reserved.
+//
+
 #include "state_machine.hpp"
 
 std::stack<StateRef> StateMachine::stack = std::stack<StateRef>();

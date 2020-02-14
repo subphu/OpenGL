@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <vector>
+#include <glm/glm.hpp>
 
 class Mesh {
     

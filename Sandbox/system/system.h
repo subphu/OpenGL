@@ -3,6 +3,9 @@
 
 #pragma once
 
+#include "define.h"
+#include "settings.h"
+
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
@@ -25,10 +28,6 @@ enum key {
     key_z = GLFW_KEY_Z,
     key_x = GLFW_KEY_X,
     key_c = GLFW_KEY_C
-};
-
-template<typename T> struct Size {
-    T width, height;
 };
 
 class System {

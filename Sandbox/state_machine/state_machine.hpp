@@ -1,8 +1,12 @@
+//  Copyright © 2019 Subph. All rights reserved.
+//
+
 #pragma once
+
+#include "state.h"
 
 #include <memory>
 #include <stack>
-#include "state.h"
 
 using StateRef = std::shared_ptr<State>;
 

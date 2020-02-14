@@ -1,12 +1,13 @@
 //  Copyright © 2020 Subph. All rights reserved.
 //
 
-#include <glm/glm.hpp>
-#include <vector>
-#include <math.h>
-
 #include "mesh.h"
 #include "define.h"
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <vector>
+#include <math.h>
 
 float * Mesh::generateCube(unsigned long &memorySize, unsigned int details, float scale) {
     float vertices[8][3] = {

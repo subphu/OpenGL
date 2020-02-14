@@ -1,15 +1,13 @@
 //  Copyright © 2019 Subph. All rights reserved.
 //
 
-#include <glm/glm.hpp>
+#include "shader.h"
+#include "define.h"
 
-#include <iostream>
+#include <glm/glm.hpp>
 #include <fstream>
 #include <sstream>
 #include <string>
-
-#include "shader.h"
-#include "define.h"
 
 #define PROGRAM "PROGRAM"
 #define VERTEX "VERTEX"
