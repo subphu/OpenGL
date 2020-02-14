@@ -21,6 +21,7 @@ public:
     
     static float * generateCube(unsigned long &memorySize, unsigned int details = MESH_VERTEX, float scale = 1);
     
+    void createPlane();
     void createCube();
     void createSphere(int wedge = 10, int segment = 20);
     
