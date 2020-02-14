@@ -1,10 +1,7 @@
 //  Copyright © 2020 Subph. All rights reserved.
 //
 
-#include <unistd.h>
-
 #include "sandbox.hpp"
-
 #include "define.h"
 #include "system/system.h"
 #include "state_machine/state_machine.hpp"
@@ -12,19 +9,16 @@
 #include "settings.h"
 #include "state/main_state.hpp"
 
+#include <unistd.h>
+
 namespace sandbox {
     
 Sandbox::Sandbox() {
+    createSettings();
     System &system = System::instance();
-    Settings &settings = Settings::instance();
-    Size<int> size = settings.windowSize;
-    
+    system.settings = &settings;
     system.settingWindow();
-    system.createWindow(size.width, size.height, settings.name);
-    
-    settings.bufferSize = system.getFramebufferSize();
-    settings.ratio = (float)settings.bufferSize.width / (float)settings.bufferSize.height;
-    
+    system.createWindow();
     system.initGlLibrary();
     system.settingInput();
     
@@ -41,7 +35,6 @@ void Sandbox::run() {
     state->load();
     
     System &system = System::instance();
-    Settings &settings = Settings::instance();
     
     lastTime = system.getTime();
     lag = settings.frameTime;
@@ -63,9 +56,8 @@ void Sandbox::run() {
 }
 
 void Sandbox::sleepTime() {
-    float frameTime = Settings::instance().frameTime;
-    if (frameTime < lag) return;
-    usleep((frameTime - lag) * 1000000);
+    if (settings.frameTime < lag) return;
+    usleep((settings.frameTime - lag) * 1000000);
     updateTime();
 }
 
@@ -75,5 +67,9 @@ void Sandbox::updateTime() {
     lastTime = currentTime;
 }
 
+void Sandbox::createSettings() {
+    settings.name = "Sandbox";
+    settings.setWindowSize({ 1200, 800 });
+}
 
 }
