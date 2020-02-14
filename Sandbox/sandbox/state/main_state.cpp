@@ -20,7 +20,8 @@ MainState::MainState() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_FRAMEBUFFER_SRGB);
     
-    mesh.createCube();
+    mesh.createPlane();
+    mesh.scale(glm::vec3(10, 10, 10));
     mesh.genBuffer();
     
     meshShader.addShaderFrom("shader/tutorial/light.vert", GL_VERTEX_SHADER);
