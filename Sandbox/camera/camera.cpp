@@ -1,12 +1,11 @@
 //  Copyright © 2019 Subph. All rights reserved.
 //
 
-#include <glm/gtc/matrix_transform.hpp>
-#include <iostream>
-
-#include "camera/camera.h"
 #include "define.h"
+#include "camera/camera.h"
 #include "system/system.h"
+
+#include <glm/gtc/matrix_transform.hpp>
 
 #define FRONT    glm::vec3(0.0f, 0.0f, 0.0f)
 #define WORLD_UP glm::vec3(0.0f, 1.0f, 0.0f)
@@ -22,6 +21,13 @@
 #define YAW   0.0f
 #define PITCH 0.0f
 #define ROLL  0.0f
+
+Camera::Camera() {
+    reset();
+    setPosition(glm::vec3(0.0f, 0.0f, 5.0f));
+    lookAt(glm::vec3(0, 0, 0));
+    updateVector();
+}
 
 Camera::Camera(glm::vec3 position, glm::vec3 direction) {
     reset();
