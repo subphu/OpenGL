@@ -20,6 +20,7 @@ namespace tutorial {
         void runCubemaps();
         void runInstancing();
         void runShadow();
+        void runTest_UI();
         
     };
 

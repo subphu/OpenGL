@@ -16,8 +16,9 @@ Tutorial::Tutorial() {
     
     system.initGlLibrary();
     system.settingInput();
+    system.settingUI();;
     
-    runInstancing();
+    runTest_UI();
     
     system.closeWindow();
 }

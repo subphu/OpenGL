@@ -21,6 +21,7 @@ Sandbox::Sandbox() {
     system.createWindow();
     system.initGlLibrary();
     system.settingInput();
+    system.settingUI();
     
     run();
     
