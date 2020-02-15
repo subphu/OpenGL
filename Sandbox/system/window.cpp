@@ -2,6 +2,11 @@
 //
 
 #include "system.h"
+#include "define.h"
+
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 #define WINDOW_FAILED_MESSAGE "Failed to create GLFW window"
 #define GLEW_FAILED_MESSAGE   "Failed to initialize GLEW"
@@ -52,6 +57,22 @@ void System::exitFailure(std::string message) {
     std::cout << message << std::endl;
     glfwTerminate();
     exit(EXIT_FAILURE);
+}
+
+void System::settingUI() {
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+//    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+//    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+//
+//    Setup Dear ImGui style
+//    ImGui::StyleColorsDark();
+    ImGui::StyleColorsClassic();
+
+//    Setup Platform/Renderer bindings
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init(GLSL_VERSION);
 }
 
 bool System::getWindowState() {

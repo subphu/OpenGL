@@ -48,6 +48,8 @@ public:
     void closeWindow();
     void exitFailure(std::string message);
     
+    void settingUI();
+    
     void swapBuffer();
     void pollEvents();
     
