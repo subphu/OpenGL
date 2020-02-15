@@ -7,7 +7,7 @@
 #include "define.h"
 #include "shader/shader.h"
 #include "system/system.h"
-#include "libraries/stb_image.h"
+#include "libraries/stb_image/stb_image.h"
 
 using namespace tutorial;
 

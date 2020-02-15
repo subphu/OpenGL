@@ -15,7 +15,7 @@
 #include "shader/shader.h"
 #include "camera/camera.h"
 #include "system/system.h"
-#include "libraries/stb_image.h"
+#include "libraries/stb_image/stb_image.h"
 #include "object/mesh.h"
 
 using namespace tutorial;
