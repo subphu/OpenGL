@@ -10,6 +10,7 @@ namespace tutorial {
         Tutorial();
         
     private:
+        void runTestUI();
         void runTriangle();
         void runTexture();
         void runPerspective();
@@ -20,7 +21,8 @@ namespace tutorial {
         void runCubemaps();
         void runInstancing();
         void runShadow();
-        void runTest_UI();
+        void runNormalMapping();
+        void runDeferredShading();
         
     };
 
