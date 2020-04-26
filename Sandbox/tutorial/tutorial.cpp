@@ -18,7 +18,7 @@ Tutorial::Tutorial() {
     system.settingInput();
     system.settingUI();;
     
-    runDeferredShading();
+    runPBR();
     
     system.closeWindow();
 }

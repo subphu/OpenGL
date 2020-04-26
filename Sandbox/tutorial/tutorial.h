@@ -23,6 +23,7 @@ namespace tutorial {
         void runShadow();
         void runNormalMapping();
         void runDeferredShading();
+        void runPBR();
         
     };
 
