@@ -187,6 +187,7 @@ void Tutorial::runDeferredShading() {
         glBlendEquation(GL_FUNC_ADD);
         glBlendFunc(GL_ONE, GL_ONE);
         glClear(GL_COLOR_BUFFER_BIT);
+        glCullFace(GL_FRONT);
 
         screenShader.use();
         glActiveTexture(GL_TEXTURE0);
@@ -233,6 +234,7 @@ void Tutorial::runDeferredShading() {
         lightShader.setUniformMatrix4fv("projection", camera.getProjection(ratio));
         lightShader.setUniformMatrix4fv("view", camera.getViewMatrix());
         glBindVertexArray(sphereVAO);
+        glCullFace(GL_BACK);
         for (unsigned int i = 0; i < totalLights; i++) {
             model = glm::mat4(1.0f);
             model = glm::translate(model, lightPositions[i]);
@@ -241,7 +243,6 @@ void Tutorial::runDeferredShading() {
             lightShader.setUniform3f("lightColor", lightColors[i]);
             glDrawElements(GL_TRIANGLES, (int)sphere.indices.size(), GL_UNSIGNED_INT, 0);
         }
-
         
         system.swapBuffer();
         system.pollEvents();
