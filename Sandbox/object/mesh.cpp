@@ -83,16 +83,16 @@ void Mesh::createSphere(int wedge, int segment) {
     float x, y, z, xz;
     float s, t;
 
-    float segmentStep = -2 * PI * 1 / segment;  // counter-clockwise
-    float wedgeStep = PI * 1 / wedge;
+    float segmentStep = -2 * PI / segment;  // counter-clockwise
+    float wedgeStep = PI / wedge;
     float segmentAngle, wedgeAngle;
 
-    for(int i = 1; i < wedge; i++) {
+    for(int i = 0; i <= wedge; i++) {
         wedgeAngle = i * wedgeStep;             // starting from 0 to pi
         y  = cosf(wedgeAngle);                  // r * cos(u)
         xz = sinf(wedgeAngle);                  // r * sin(u)
 
-        for(int j = 0; j < segment; j++) {
+        for(int j = 0; j <= segment; j++) {
             segmentAngle = j * segmentStep;     // starting from 0 to 2pi
             x = xz * cosf(segmentAngle);        // r * sin(u) * cos(v)
             z = xz * sinf(segmentAngle);        // r * sin(u) * sin(v)
@@ -105,29 +105,15 @@ void Mesh::createSphere(int wedge, int segment) {
             texCoords.insert(texCoords.end(), { s, t });
         }
     }
-    vertices.insert(vertices.end(), { 0, 1, 0 });
-    normals .insert(normals .end(), { 0, 1, 0 });
-    texCoords.insert(texCoords.end(), { 0, 0 });
-    
-    vertices.insert(vertices.end(), { 0, -1, 0 });
-    normals .insert(normals .end(), { 0, -1, 0 });
-    texCoords.insert(texCoords.end(), { 1, 1 });
     
     int w1, w2;
-    int last   = (wedge-1) * segment - 1;
-    int top    = last + 1;
-    int bottom = last + 2;
-    for(int i = 0; i < segment; i++) {
-        int d = (i + 1) % segment;
-        indices.insert(indices.end(), { top   , i     , d      });
-        indices.insert(indices.end(), { bottom, last-i, last-d });
-    }
-    for(int i = 0; i < wedge-2; i++) {
-        w1 = i  * segment;
-        w2 = w1 + segment;
+    int segmentVertices = segment + 1;
+    for(int i = 0; i < wedge; i++) {
+        w1 = i  * segmentVertices;
+        w2 = w1 + segmentVertices;
 
         for(int j = 0; j < segment; j++) {
-            int d = (j + 1) % segment;
+            int d = j + 1;
             indices.insert(indices.end(), { w1+j, w2+j, w1+d });
             indices.insert(indices.end(), { w1+d, w2+j, w2+d });
         }
