@@ -87,6 +87,7 @@ void Tutorial::runPBR() {
     
     system.disableCursor();
     
+    shader.setUniform3f("albedo", 0.5f, 0.0f, 0.0f);
 
     while (system.getWindowState()) {
         if (system.getKeyState(key_esc)) system.closeWindow();
@@ -132,11 +133,17 @@ void Tutorial::runPBR() {
         glBindTexture(GL_TEXTURE_2D, ao);
 
         glBindVertexArray(sphereVAO);
+        shader.setUniform3f("defAlbedo", 0.5f, 0.0f, 0.0f);
+        
         glm::mat4 model = glm::mat4(1.0f);
-        for (int i = 0; i < colums; i++) {
-            for (int j = 0; j < rows; j++) {
-                int x = j - rows   / 2 + 0.5f;
-                int y = i - colums / 2 + 0.5f;
+        for (int i = 0; i < rows; i++) {
+            shader.setUniform1f("defMetallic", (float)i / (float)rows);
+            
+            for (int j = 0; j < colums; j++) {
+                shader.setUniform1f("defRoughness", glm::clamp((float)j / (float)colums, 0.05f, 1.0f));
+                
+                int x = j - colums / 2 + 0.5f;
+                int y = i - rows   / 2 + 0.5f;
 
                 model = glm::mat4(1.0f);
                 model = glm::translate(model, glm::vec3(x * spacing, y * spacing, 0.f));

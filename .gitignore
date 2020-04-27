@@ -5,3 +5,6 @@
 Sandbox.xcodeproj/**
 
 **/.DS_Store
+
+resources/pbr
+resources/minecraft
