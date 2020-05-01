@@ -21,7 +21,7 @@ using namespace tutorial;
 
 unsigned int loadTexture(const char *path);
 
-void Tutorial::runPBR() {
+void Tutorial::runPbr() {
     
     System &system = System::instance();
     Size<int> size = system.getFramebufferSize();
@@ -53,8 +53,8 @@ void Tutorial::runPBR() {
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)(sphere.sizeofVertices() + sphere.sizeofNormals()));
     
     Shader shader = Shader();
-    shader.addShaderFrom("shader/tutorial/pbr.vert", GL_VERTEX_SHADER);
-    shader.addShaderFrom("shader/tutorial/pbr.frag", GL_FRAGMENT_SHADER);
+    shader.addShaderFrom("shader/pbr/pbr.vert", GL_VERTEX_SHADER);
+    shader.addShaderFrom("shader/pbr/pbr.frag", GL_FRAGMENT_SHADER);
     shader.compile();
     
     shader.use();
@@ -87,7 +87,8 @@ void Tutorial::runPBR() {
     
     system.disableCursor();
     
-    shader.setUniform3f("albedo", 0.5f, 0.0f, 0.0f);
+    shader.setUniform3f("defAlbedo", 0.5f, 0.0f, 0.0f);
+    shader.setUniform1f("defAo", 1.0f);
 
     while (system.getWindowState()) {
         if (system.getKeyState(key_esc)) system.closeWindow();
@@ -133,7 +134,6 @@ void Tutorial::runPBR() {
         glBindTexture(GL_TEXTURE_2D, ao);
 
         glBindVertexArray(sphereVAO);
-        shader.setUniform3f("defAlbedo", 0.5f, 0.0f, 0.0f);
         
         glm::mat4 model = glm::mat4(1.0f);
         for (int i = 0; i < rows; i++) {
