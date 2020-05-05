@@ -31,26 +31,10 @@ void Tutorial::runPbr() {
     
     Mesh sphere = Mesh();
     sphere.createSphere(25, 50);
-
-    unsigned int sphereVAO, sphereVBO, sphereEBO;
-    glGenVertexArrays(1, &sphereVAO);
-    glBindVertexArray(sphereVAO);
-    glGenBuffers(1, &sphereVBO);
-    glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
-    glBufferData(GL_ARRAY_BUFFER, sphere.sizeofVertices() + sphere.sizeofNormals() + sphere.sizeofTexCoords(), NULL, GL_STATIC_DRAW);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sphere.sizeofVertices(), &sphere.vertices[0]);
-    glBufferSubData(GL_ARRAY_BUFFER, sphere.sizeofVertices(), sphere.sizeofNormals(), &sphere.normals[0]);
-    glBufferSubData(GL_ARRAY_BUFFER, sphere.sizeofVertices() + sphere.sizeofNormals(), sphere.sizeofTexCoords(), &sphere.texCoords[0]);
-    glGenBuffers(1, &sphereEBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sphereEBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sphere.sizeofIndices(), &sphere.indices[0], GL_STATIC_DRAW);
     
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-    glEnableVertexAttribArray(2);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)(sphere.sizeofVertices()));
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)(sphere.sizeofVertices() + sphere.sizeofNormals()));
+    sphere.genVBO();
+    sphere.genVAO();
+    sphere.genEBO();
     
     Shader shader = Shader();
     shader.addShaderFrom("shader/pbr/pbr.vert", GL_VERTEX_SHADER);
@@ -132,8 +116,6 @@ void Tutorial::runPbr() {
         glBindTexture(GL_TEXTURE_2D, roughness);
         glActiveTexture(GL_TEXTURE4);
         glBindTexture(GL_TEXTURE_2D, ao);
-
-        glBindVertexArray(sphereVAO);
         
         glm::mat4 model = glm::mat4(1.0f);
         for (int i = 0; i < rows; i++) {
@@ -149,7 +131,7 @@ void Tutorial::runPbr() {
                 model = glm::translate(model, glm::vec3(x * spacing, y * spacing, 0.f));
                 shader.setUniformMatrix4fv("model", model);
 
-                glDrawElements(GL_TRIANGLES, (int)sphere.indices.size(), GL_UNSIGNED_INT, 0);
+                sphere.draw();
             }
         }
         
@@ -173,7 +155,5 @@ void Tutorial::runPbr() {
         system.pollEvents();
     }
     
-    glDeleteVertexArrays(1, &sphereVAO);
-    glDeleteBuffers(1, &sphereEBO);
-    glDeleteBuffers(1, &sphereVBO);
+    sphere.removeBuffer();
 }
