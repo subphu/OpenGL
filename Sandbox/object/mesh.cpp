@@ -69,21 +69,40 @@ void Mesh::createQuad() {
 }
 
 void Mesh::createCube() {
-    vertices = {
-        -.5,  .5,  .5,   -.5, -.5,  .5,    .5,  .5,  .5,    .5, -.5,  .5,
-         .5,  .5, -.5,    .5, -.5, -.5,   -.5,  .5, -.5,   -.5, -.5, -.5
+    float cubeVertices[8][3] = {
+        {-.5,  .5,  .5}, {-.5, -.5,  .5}, { .5,  .5,  .5}, { .5, -.5,  .5},
+        { .5,  .5, -.5}, { .5, -.5, -.5}, {-.5,  .5, -.5}, {-.5, -.5, -.5}
     };
-    indices = {
+    unsigned int cubeIndices[] = {
         6, 7, 0, 0, 7, 1,   2, 3, 4, 4, 3, 5,
         1, 7, 3, 3, 7, 5,   6, 0, 4, 4, 0, 2,
         4, 5, 6, 6, 5, 7,   0, 1, 2, 2, 1, 3
     };
-    for (int i = 0; i < 8; i++) {
-        glm::vec3 n = glm::normalize(glm::vec3(vertices[0], vertices[1], vertices[2]));
-        normals.push_back(n.x);
-        normals.push_back(n.y);
-        normals.push_back(n.z);
+
+    for (int i = 0; i < 36; i++) {
+        float *vertex = cubeVertices[cubeIndices[i]];
+
+        float normal[] = { .0, .0, .0 };
+        int side = i / 6;
+        int axis = side / 2;
+        normal[axis] = side % 2 * 2 - 1;
+
+        float texture[] = { .0, .0 };
+        if (axis == 0) texture[0] = vertex[1] > 0;
+        else           texture[0] = vertex[0] > 0;
+        if (axis == 2) texture[1] = vertex[1] > 0;
+        else           texture[1] = vertex[2] < 0;
+
+        vertices .insert(vertices .end(), { vertex[0], vertex[1], vertex[2] });
+        normals  .insert(normals  .end(), { normal[0], normal[1], normal[2] });
+        texCoords.insert(texCoords.end(), { texture[0], texture[1] });
     }
+    
+    indices = {
+        0 ,1 ,2 ,3 ,4 ,5 ,   6 ,7 ,8 ,9 ,10,11,
+        12,13,14,15,16,17,   18,19,20,21,22,23,
+        24,25,26,27,28,29,   30,31,32,33,34,35
+    };
 }
 
 
