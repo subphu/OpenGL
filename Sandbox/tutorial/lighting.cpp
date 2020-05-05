@@ -38,30 +38,11 @@ void Tutorial::runLighting() {
     lightShader.bindFragDataLocation(0, "fragColor");
     lightShader.compile();
     
-    unsigned long memorySize;
-    float * vertices = Mesh::generateCube(memorySize, MESH_NORMAL);
-    
-    GLuint VBO, cubeVAO;
-    glGenVertexArrays(1, &cubeVAO);
-    glBindVertexArray(cubeVAO);
-    
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, memorySize, vertices, GL_STATIC_DRAW);
-    
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-    
-    GLuint lightVAO;
-    glGenVertexArrays(1, &lightVAO);
-    glBindVertexArray(lightVAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
+    Mesh vertices = Mesh();
+    vertices.createCube();
+    vertices.genVBO();
+    vertices.genVAO();
+    vertices.genEBO();
     
     float lag = 0;
     float lastTime = system.getTime();
@@ -114,8 +95,7 @@ void Tutorial::runLighting() {
         glm::mat4 model = glm::mat4(1.0f);
         shader.setUniformMatrix4fv("model", model);
 
-        glBindVertexArray(cubeVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        vertices.draw();
         
         lightShader.use();
         lightShader.setUniform3f("lightColor", lightColor);
@@ -127,9 +107,8 @@ void Tutorial::runLighting() {
         model = glm::translate(model, lightPos);
         model = glm::scale(model, glm::vec3(0.1f));
         lightShader.setUniformMatrix4fv("model", model);
-
-        glBindVertexArray(lightVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        
+        vertices.draw();
         
         system.swapBuffer();
         system.pollEvents();
@@ -138,7 +117,6 @@ void Tutorial::runLighting() {
         lastTime = system.getTime();
     }
     
-    glDeleteVertexArrays(1, &cubeVAO);
-    glDeleteVertexArrays(1, &lightVAO);
-    glDeleteBuffers(1, &VBO);
+    vertices.removeBuffer();
+    
 }
