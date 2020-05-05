@@ -26,8 +26,11 @@ public:
     void createCube();
     void createSphere(int wedge = 10, int segment = 20);
     
-    void genBuffer();
+    void genVBO();
+    void genVAO();
+    void genEBO();
     void draw();
+    void removeBuffer();
     
     void scale(glm::vec3 size);
     void rotate(float angle, glm::vec3 axis);

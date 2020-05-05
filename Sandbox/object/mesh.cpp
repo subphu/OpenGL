@@ -147,22 +147,37 @@ void Mesh::createSphere(int wedge, int segment) {
     }
 }
 
-void Mesh::genBuffer() {
+void Mesh::genVAO() {
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
-    glGenBuffers(1, &vao);
-    glBindBuffer(GL_ARRAY_BUFFER, vao);
-    glBufferData(GL_ARRAY_BUFFER, sizeofVertices() + sizeofNormals(), NULL, GL_STATIC_DRAW);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeofVertices(), &vertices[0]);
-    glBufferSubData(GL_ARRAY_BUFFER, sizeofVertices(), sizeofNormals(), &normals[0]);
-    glGenBuffers(1, &ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeofIndices(), &indices[0], GL_STATIC_DRAW);
     
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)(sizeofVertices()));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)(sizeofVertices() + sizeofNormals()));
+}
+
+void Mesh::genVBO() {
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeofVertices() + sizeofNormals() + sizeofTexCoords(), NULL, GL_STATIC_DRAW);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeofVertices(), &vertices[0]);
+    glBufferSubData(GL_ARRAY_BUFFER, sizeofVertices(), sizeofNormals(), &normals[0]);
+    glBufferSubData(GL_ARRAY_BUFFER, sizeofVertices() + sizeofNormals(), sizeofTexCoords(), &texCoords[0]);
+}
+
+void Mesh::genEBO() {
+    glGenBuffers(1, &ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeofIndices(), &indices[0], GL_STATIC_DRAW);
+}
+
+void Mesh::removeBuffer() {
+    glDeleteVertexArrays(1, &vao);
+    glDeleteBuffers(1, &vbo);
+    glDeleteBuffers(1, &ebo);
 }
 
 void Mesh::draw() {

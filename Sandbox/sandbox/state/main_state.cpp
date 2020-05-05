@@ -22,7 +22,7 @@ MainState::MainState() {
     
     mesh.createPlane();
     mesh.scale(glm::vec3(10, 10, 10));
-    mesh.genBuffer();
+//    mesh.genBuffer();
     
     meshShader.addShaderFrom("shader/tutorial/light.vert", GL_VERTEX_SHADER);
     meshShader.addShaderFrom("shader/tutorial/light.frag", GL_FRAGMENT_SHADER);
