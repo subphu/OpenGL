@@ -55,9 +55,17 @@ float * Mesh::generateCube(unsigned long &memorySize, unsigned int details, floa
 }
 
 void Mesh::createPlane() {
-    vertices = { -.5, 0., .5,  .5, 0., .5,  .5, 0., -.5,  -.5, 0., -.5 };
-    normals  = {  0., 1., 0.,  0., 1., 0.,  0., 1.,  0.,   0., 1.,  0. };
-    indices  = { 0, 1, 2, 2, 3, 0 };
+    vertices  = { -.5, 0., .5,  .5, 0., .5,  .5, 0., -.5,  -.5, 0., -.5 };
+    normals   = {  0., 1., 0.,  0., 1., 0.,  0., 1.,  0.,   0., 1.,  0. };
+    texCoords = { 0, 1,   1, 1,   1, 0,   0, 0 };
+    indices   = { 0, 1, 2, 2, 3, 0 };
+}
+
+void Mesh::createQuad() {
+    vertices  = { -1., 1., 0.,   1., 1., 0.,   1.,-1., 0.,   -1.,-1., 0., };
+    normals   = {  0., 0., 1.,   0., 0., 1.,   0., 0., 1.,    0., 0., 1. };
+    texCoords = { 0, 1,   1, 1,   1, 0,   0, 0  };
+    indices   = { 0, 1, 2, 2, 3, 0 };
 }
 
 void Mesh::createCube() {
