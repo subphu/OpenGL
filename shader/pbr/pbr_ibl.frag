@@ -1,5 +1,12 @@
 #version 410 core
 
+uniform sampler2D albedoMap;
+uniform sampler2D normalMap;
+uniform sampler2D metallicMap;
+uniform sampler2D roughnessMap;
+uniform sampler2D aoMap;
+
+// used without textures
 uniform vec3  defAlbedo;
 uniform float defMetallic;
 uniform float defRoughness;
@@ -13,6 +20,7 @@ uniform sampler2D brdfLUT;
 uniform vec3 lightPositions[4];
 uniform vec3 lightColors[4];
 uniform vec3 viewPos;
+uniform int useTexture;
 
 in vec3 Normal;
 in vec3 FragPos;
@@ -21,6 +29,22 @@ in vec2 TexCoords;
 out vec4 fragColor;
 
 const float PI = 3.14159265359;
+
+vec3 getNormalFromMap() {
+    vec3 tangentNormal = texture(normalMap, TexCoords).xyz * 2.0 - 1.0;
+    
+    vec3 Q1  = dFdx(FragPos);
+    vec3 Q2  = dFdy(FragPos);
+    vec2 st1 = dFdx(TexCoords);
+    vec2 st2 = dFdy(TexCoords);
+
+    vec3 N   = normalize(Normal);
+    vec3 T   = normalize(Q1*st2.t - Q2*st1.t);
+    vec3 B   = -normalize(cross(N, T));
+    mat3 TBN = mat3(T, B, N);
+
+    return normalize(TBN * tangentNormal);
+}
 
 float DistributionGGX(vec3 N, vec3 H, float roughness) {
     // UE4 use square roughness 
@@ -68,8 +92,15 @@ void main() {
     float metallic  = defMetallic;
     float roughness = defRoughness;
     float ao        = defAo;
+    
+    if (useTexture == 1) {
+        albedo    = pow(texture(albedoMap, TexCoords).rgb, vec3(2.2));
+        metallic  = texture(metallicMap, TexCoords).r;
+        roughness = texture(roughnessMap, TexCoords).r;
+        ao        = texture(aoMap, TexCoords).r;
+    }
 
-    vec3 N = Normal;
+    vec3 N = (useTexture == 1) ? getNormalFromMap() : Normal;
     vec3 V = normalize(viewPos - FragPos);
     vec3 R = reflect(-V, N);
 
