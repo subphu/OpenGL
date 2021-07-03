@@ -27,6 +27,9 @@ public:
     glm::mat4 getViewMatrix();
     glm::mat4 getProjection(float ratio);
     
+    
+    void updateVector();
+    void updateRotation();
 private:
     glm::vec3 focusPoint;
     glm::vec3 position;
@@ -48,7 +51,4 @@ private:
     
     bool lockFocus;
     bool useConstraint;
-    
-    void updateVector();
-    void updateRotation();
 };

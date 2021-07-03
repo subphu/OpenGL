@@ -13,14 +13,18 @@ uniform float defRoughness;
 uniform float defAo;
 
 // IBL
+uniform samplerCube cubemap;
 uniform samplerCube irradianceMap;
 uniform samplerCube prefilterMap;
 uniform sampler2D brdfLUT;
+uniform sampler2D interferenceMap;
 
 uniform vec3 lightPositions[4];
 uniform vec3 lightColors[4];
 uniform vec3 viewPos;
 uniform int useTexture;
+uniform int useTransparent;
+uniform int useInterference;
 
 in vec3 Normal;
 in vec3 FragPos;
@@ -87,11 +91,37 @@ vec3 fresnelSchlickRoughness(float cosTheta, vec3 F0, float roughness) {
     return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(1.0 - cosTheta, 5.0);
 }
 
+float refractionAngle(float n1, float theta1, float n2) {
+    float sin2 = n1 * sin(theta1) / n2;
+    float theta2 = asin(sin2);
+    return theta2;
+}
+
+float getScaledOPD(vec3 N, vec3 V) {
+    const float maxD   = 4e-6;
+    const float maxOpd = 4. * maxD;
+    const float scaleD = 0.25;
+    const float d = scaleD * maxD;
+
+    const float n1 = 1.0; // refraction index air
+    const float n2 = 1.5; // refraction index oil
+    
+    float theta1 = acos(dot(V, N));
+    float theta2 = refractionAngle(n1, theta1, n2);
+
+    float opd = n2 * 2.0 * d * cos(theta2);
+    return opd / maxOpd;
+}
+
 void main() {
     vec3  albedo    = defAlbedo;
     float metallic  = defMetallic;
     float roughness = defRoughness;
     float ao        = defAo;
+    
+    // transparent
+    albedo = (useTransparent == 0) ? albedo :
+        texture(cubemap, normalize(FragPos - viewPos)).rgb;
     
     if (useTexture == 1) {
         albedo    = pow(texture(albedoMap, TexCoords).rgb, vec3(2.2));
@@ -104,6 +134,10 @@ void main() {
     vec3 V = normalize(viewPos - FragPos);
     vec3 R = reflect(-V, N);
 
+    float opd = getScaledOPD(N, V);
+    vec3  interColor = texture(interferenceMap, vec2(opd, 0.)).rgb;
+    interColor = (useInterference == 0) ? vec3(1.0) : interColor;
+    
     // calculate reflectance at normal incidence; if diselectric (like plastic) use
     // F0 of 0.04 and if it's a metal, use the albedo color as F0 (metallic workflow)
     vec3 F0 = vec3(0.04);
@@ -160,9 +194,10 @@ void main() {
     vec2 brdf  = texture(brdfLUT, vec2(max(dot(N, V), 0.0), roughness)).rg;
     vec3 specular = prefilteredColor * (F * brdf.x + brdf.y);
 
-    vec3 ambient = (kD * diffuse + specular) * ao;
+    kD = (useTexture == 1) ? kD : kD;//vec3(1.);
+    vec3 ambient = (kD * diffuse + specular * interColor) * 1.0;
     
-    vec3 color = ambient + Lo;
+    vec3 color = ambient + Lo * interColor;
 
     // HDR tonemapping
     color = color / (color + vec3(1.0));

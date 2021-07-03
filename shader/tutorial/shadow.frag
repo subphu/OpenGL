@@ -88,20 +88,15 @@ vec3 gridSamplingDisk[20] = vec3[] (
 );
 
 float calcPointLightShadow(vec3 fragDistance, int idx) {
-    float viewDistance = length(viewPos - FragPos);
-    float diskRadius = (1.0 + (viewDistance / maxDistance)) / 50.0;
     float shadow = 0.0;
     float bias = 0.5;
-    int samples = 4;
 
     float fragDepth = length(fragDistance) - bias;
-    for(int i = 0; i < samples; ++i) {
-        float closestDepth = getDepth(idx, fragDistance + gridSamplingDisk[i] * diskRadius);
-        closestDepth *= maxDistance;
-        shadow += (fragDepth > closestDepth) ? 1 : 0;
-    }
+    float closestDepth = getDepth(idx, fragDistance);
+    closestDepth *= maxDistance;
+    shadow += (fragDepth > closestDepth) ? 1 : 0;
 
-    return shadow / float(samples);
+    return shadow ;
 }
 
 float getDepth(int texIdx, vec3 fragDistance) {

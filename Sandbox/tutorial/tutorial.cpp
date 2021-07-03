@@ -12,7 +12,7 @@ Tutorial::Tutorial() {
     System &system = System::instance();
     
     system.settingWindow();
-    system.createWindow(900, 900, "Tutorial");
+    system.createWindow(1280, 720, "Tutorial");
     
     system.initGlLibrary();
     system.settingInput();
