@@ -4,10 +4,14 @@
 #include "mesh.h"
 #include "define.h"
 
+#include "../libraries/tiny_obj_loader/tiny_obj_loader.h"
+
 #include <glm/glm.hpp>
+#include <glm/gtx/hash.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 #include <math.h>
+#include <unordered_map>
 
 float * Mesh::generateCube(unsigned long &memorySize, unsigned int details, float scale) {
     float vertices[8][3] = {
@@ -206,3 +210,36 @@ unsigned long Mesh::sizeofVertices() { return sizeof(float) * vertices.size(); }
 unsigned long Mesh::sizeofNormals() { return sizeof(float) * normals.size(); }
 unsigned long Mesh::sizeofTexCoords() { return sizeof(float) * texCoords.size(); }
 unsigned long Mesh::sizeofIndices() { return sizeof(int) * indices.size(); }
+
+
+
+void Mesh::loadModel(const char* filename) {
+    tinyobj::attrib_t attrib;
+    std::vector<tinyobj::shape_t> shapes;
+    std::vector<tinyobj::material_t> materials;
+    std::unordered_map<size_t, uint32_t> uniqueVertices;
+    std::string warn, err;
+    
+    if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, filename)) {
+        throw std::runtime_error(warn + err);
+    }
+    
+    for (const auto& shape : shapes) {
+        for (uint i = 0; i < shape.mesh.indices.size(); i++) {
+            const auto& index = shape.mesh.indices[i];
+            
+            vertices.push_back(attrib.vertices[3 * index.vertex_index + 0]); // x
+            vertices.push_back(attrib.vertices[3 * index.vertex_index + 1]); // u
+            vertices.push_back(attrib.vertices[3 * index.vertex_index + 2]); // z
+            
+            normals.push_back(attrib.normals[3 * index.normal_index + 0]); // x
+            normals.push_back(attrib.normals[3 * index.normal_index + 1]); // u
+            normals.push_back(attrib.normals[3 * index.normal_index + 2]); // z
+            
+            texCoords.push_back(attrib.texcoords[2 * index.texcoord_index + 0]); // x
+            texCoords.push_back(1.0f - attrib.texcoords[2 * index.texcoord_index + 1]); // y
+
+            indices.push_back(i);
+        }
+    }
+}

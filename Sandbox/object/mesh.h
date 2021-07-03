@@ -25,6 +25,7 @@ public:
     void createQuad();
     void createCube();
     void createSphere(int wedge = 10, int segment = 20);
+    void loadModel(const char* filename);
     
     void genVBO();
     void genVAO();
