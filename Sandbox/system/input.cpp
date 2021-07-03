@@ -25,8 +25,17 @@ void System::setScrollCallback(void (*callback)(float, float)) {
     glfwSetScrollCallback(window, glfwScrollCallback);
 }
 
+void System::setMouseCallback(void (*callback)(int, int)) {
+    mouseCallback = callback;
+    glfwSetMouseButtonCallback(window, glfwMouseCallback);
+}
+
 void System::glfwScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
     System::instance().scrollCallback(xoffset, yoffset);
+}
+
+void System::glfwMouseCallback(GLFWwindow* window, int button, int action, int mods) {
+    System::instance().mouseCallback(button, action);
 }
 
 bool System::getKeyState(int key) {

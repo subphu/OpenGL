@@ -19,6 +19,7 @@ enum keyState {
 
 enum key {
     key_esc = GLFW_KEY_ESCAPE,
+    key_lshift = GLFW_KEY_LEFT_SHIFT,
     key_w = GLFW_KEY_W,
     key_a = GLFW_KEY_A,
     key_s = GLFW_KEY_S,
@@ -27,7 +28,8 @@ enum key {
     key_e = GLFW_KEY_E,
     key_z = GLFW_KEY_Z,
     key_x = GLFW_KEY_X,
-    key_c = GLFW_KEY_C
+    key_c = GLFW_KEY_C,
+    key_r = GLFW_KEY_R
 };
 
 class System {
@@ -62,6 +64,7 @@ public:
     glm::vec2 getCursorMovement();
     
     void setScrollCallback(void (*callback)(float, float));
+    void setMouseCallback(void (*callback)(int, int));
     
     float getTime();
 
@@ -73,9 +76,11 @@ public:
 private:
     GLFWwindow* window;
     void (*scrollCallback)(float, float);
+    void (*mouseCallback)(int, int);
     
     static void glfwScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
-    
+    static void glfwMouseCallback(GLFWwindow* window, int button, int action, int mods);
+
     System();
     ~System();
 
